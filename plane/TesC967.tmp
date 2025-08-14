@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://clnh5b0hbcsqg"]
+
+[ext_resource type="PackedScene" uid="uid://b2oyhh2u17n40" path="res://plane/Plane.tscn" id="1_nw6ld"]
+
+[node name="TestScene" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.51208, -0.310303, -5.89096)
+size = Vector3(21.5759, 0.379395, 24.9536)
+
+[node name="Plane" parent="." instance=ExtResource("1_nw6ld")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -1)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.980116, 0.198427, 0, -0.198427, 0.980116, -2.33708, 2.96721, 9.29038)
