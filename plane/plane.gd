@@ -33,6 +33,7 @@ var pitch_input := 0.0
 
 func _physics_process(delta):
 	get_input(delta)
+	#print(pitch_input)
 	# Rotate the transform based on the input values
 	transform.basis = transform.basis.rotated(transform.basis.x, pitch_input * pitch_speed * delta)
 	transform.basis = transform.basis.rotated(Vector3.UP, turn_input * turn_speed * delta)
@@ -61,6 +62,7 @@ func get_input(delta):
 	# Throttle input
 	if Input.is_action_pressed("throttle_up"):
 		target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
+		print_debug(forward_speed,'|',max_flight_speed)
 	if Input.is_action_pressed("throttle_down"):
 		var limit = 0 if grounded else min_flight_speed
 		target_speed = max(forward_speed - throttle_delta * delta, limit)
