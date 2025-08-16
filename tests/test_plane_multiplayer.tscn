@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8qm2tbths36o"]
+
+[ext_resource type="PackedScene" uid="uid://b2oyhh2u17n40" path="res://src/plane/Plane.tscn" id="1_jcgfh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s5aon"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_xecpc"]
+sky_material = SubResource("ProceduralSkyMaterial_s5aon")
+
+[sub_resource type="Environment" id="Environment_ilp0f"]
+background_mode = 2
+sky = SubResource("Sky_xecpc")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="TestPlaneMultiplayer" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ilp0f")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.07918, 0)
+size = Vector3(100, 1, 100)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.16526, 0, -7.00329)
+height = 21.8334
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4149, 0, -22.979)
+radius = 2.635
+height = 7.87391
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14357, 0, 9.19825)
+
+[node name="Plane" parent="." instance=ExtResource("1_jcgfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.117237, 0.488887, 1.88951)
