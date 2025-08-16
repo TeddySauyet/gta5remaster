@@ -30,10 +30,43 @@ var grounded := false
 var turn_input := 0.0
 var pitch_input := 0.0
 
+class PlaneInputState:
+	var throttle_up : float
+	var throttle_down : float
+	var pitch_up : float
+	var pitch_down : float
+	var roll_left : float
+	var roll_right : float
+	static func create(throttle_up : float,
+			throttle_down : float,
+			pitch_up : float,
+			pitch_down : float,
+			roll_left : float,
+			roll_right : float) -> PlaneInputState:
+		var result = PlaneInputState.new()
+		result.throttle_up = throttle_up
+		result.throttle_down = throttle_down
+		result.pitch_up = pitch_up
+		result.pitch_down = pitch_down
+		result.roll_left = roll_left
+		result.roll_right = roll_right
+		return result
+		
+var _current_inputs := PlaneInputState.create(0,0,0,0,0,0)
+
+func set_input_state() -> void:
+	_current_inputs = PlaneInputState.create(
+			Input.get_action_strength("throttle_up"),
+			Input.get_action_strength("throttle_down"),
+			Input.get_action_strength("pitch_up"),
+			Input.get_action_strength("pitch_down"),
+			Input.get_action_strength("roll_left"),
+			Input.get_action_strength("roll_right"),
+		)
 
 func _physics_process(delta):
+	set_input_state()
 	get_input(delta)
-	#print(pitch_input)
 	# Rotate the transform based on the input values
 	transform.basis = transform.basis.rotated(transform.basis.x, pitch_input * pitch_speed * delta)
 	transform.basis = transform.basis.rotated(Vector3.UP, turn_input * turn_speed * delta)
@@ -60,20 +93,19 @@ func _physics_process(delta):
 
 func get_input(delta):
 	# Throttle input
-	if Input.is_action_pressed("throttle_up"):
+	if _current_inputs.throttle_up != 0.0:
 		target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
-		print_debug(forward_speed,'|',max_flight_speed)
-	if Input.is_action_pressed("throttle_down"):
+	if _current_inputs.throttle_down != 0.0:
 		var limit = 0 if grounded else min_flight_speed
 		target_speed = max(forward_speed - throttle_delta * delta, limit)
 	# Turn (roll/yaw) input
 	turn_input = 0
 	if forward_speed > 0.5:
-		turn_input -= Input.get_action_strength("roll_right")
-		turn_input += Input.get_action_strength("roll_left")
+		turn_input += _current_inputs.roll_left
+		turn_input -= _current_inputs.roll_right
 	# Pitch (climb/dive) input
 	pitch_input = 0
 	if not grounded:
-		pitch_input -= Input.get_action_strength("pitch_down")
+		pitch_input -= _current_inputs.pitch_down
 	if forward_speed >= min_flight_speed:
-		pitch_input += Input.get_action_strength("pitch_up")
+		pitch_input += _current_inputs.pitch_up
