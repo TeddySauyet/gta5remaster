@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmuknn8eypng1"]
+
+[ext_resource type="Script" path="res://src/utilities/debug_multiplayer.gd" id="1_uquya"]
+
+[node name="DebugMultiplayer" type="Node"]
+script = ExtResource("1_uquya")

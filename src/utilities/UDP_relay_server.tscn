@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwm74xxc1b0t7"]
+
+[ext_resource type="Script" path="res://src/utilities/UDP_relay_server.gd" id="1_v21l3"]
+
+[node name="UdpRelayServer" type="Node"]
+script = ExtResource("1_v21l3")
