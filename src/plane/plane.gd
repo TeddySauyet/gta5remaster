@@ -6,9 +6,11 @@ class_name PlayerPlane
 ## Adapted from https://kidscancode.org/godot_recipes/3.x/3d/simple_airplane/index.html
 
 # Can't fly below this speed
-var min_flight_speed := 10
+var min_flight_speed := 10.0
 # Maximum airspeed
-var max_flight_speed := 30
+var max_flight_speed := 30.0
+## Maximum gravity acceleration (not implemented yet)
+var gravity_acceleration := 5.0
 # Turn rate
 var turn_speed := 0.75
 # Climb/dive rate
@@ -16,7 +18,7 @@ var pitch_speed := 0.5
 # Wings "autolevel" speed
 var level_speed := 3.0
 # Throttle change speed
-var throttle_delta := 30
+var throttle_delta := 30.0
 # Acceleration/deceleration
 var acceleration := 6.0
 
@@ -65,7 +67,8 @@ func set_input_state() -> void:
 		)
 
 func _physics_process(delta):
-	set_input_state()
+	if is_authority():
+		set_input_state()
 	get_input(delta)
 	# Rotate the transform based on the input values
 	transform.basis = transform.basis.rotated(transform.basis.x, pitch_input * pitch_speed * delta)
@@ -91,9 +94,12 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func get_input(delta):
+func get_input(delta  : float):
 	# Throttle input
 	if _current_inputs.throttle_up != 0.0:
+		var xz_project = -transform.basis.z
+		xz_project.y = 0
+		var gravity_effect := gravity_acceleration * sin(xz_project.angle_to(-transform.basis.z))
 		target_speed = min(forward_speed + throttle_delta * delta, max_flight_speed)
 	if _current_inputs.throttle_down != 0.0:
 		var limit = 0 if grounded else min_flight_speed
@@ -109,3 +115,6 @@ func get_input(delta):
 		pitch_input -= _current_inputs.pitch_down
 	if forward_speed >= min_flight_speed:
 		pitch_input += _current_inputs.pitch_up
+
+func is_authority() -> bool:
+	return get_multiplayer_authority() == multiplayer.get_unique_id()

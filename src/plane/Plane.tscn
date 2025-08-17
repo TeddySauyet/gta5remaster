@@ -1,8 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2oyhh2u17n40"]
+[gd_scene load_steps=4 format=3 uid="uid://b2oyhh2u17n40"]
 
 [ext_resource type="Script" path="res://src/plane/plane.gd" id="1_uo7eh"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4hsp7"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8pa36"]
+properties/0/path = NodePath(".:_current_inputs:throttle_up")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:_current_inputs:throttle_down")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:_current_inputs:pitch_up")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:_current_inputs:pitch_down")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:_current_inputs:roll_left")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:_current_inputs:roll_right")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:velocity")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:forward_speed")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath(".:target_speed")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath(".:turn_input")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath(".:pitch_input")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath(".:position")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath(".:rotation")
+properties/12/spawn = true
+properties/12/replication_mode = 1
 
 [node name="Plane" type="CharacterBody3D"]
 script = ExtResource("1_uo7eh")
@@ -22,3 +63,6 @@ shape = SubResource("CylinderShape3D_4hsp7")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.896169, 0.443713, 0, -0.443713, 0.896169, 0, 1.95328, 3.74299)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8pa36")

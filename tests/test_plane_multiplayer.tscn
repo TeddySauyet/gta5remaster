@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8qm2tbths36o"]
+[gd_scene load_steps=7 format=3 uid="uid://c8qm2tbths36o"]
 
-[ext_resource type="PackedScene" uid="uid://b2oyhh2u17n40" path="res://src/plane/Plane.tscn" id="1_jcgfh"]
+[ext_resource type="Script" path="res://tests/test_plane_multiplayer.gd" id="1_pr0in"]
+[ext_resource type="PackedScene" uid="uid://jniya483s4b0" path="res://unorganized/player_spawner.tscn" id="1_vn5ls"]
+[ext_resource type="PackedScene" uid="uid://dmuknn8eypng1" path="res://src/utilities/debug_multiplayer.tscn" id="3_d8kr4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s5aon"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,6 +18,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="TestPlaneMultiplayer" type="Node3D"]
+script = ExtResource("1_pr0in")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -43,5 +46,22 @@ height = 7.87391
 [node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14357, 0, 9.19825)
 
-[node name="Plane" parent="." instance=ExtResource("1_jcgfh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.117237, 0.488887, 1.88951)
+[node name="PlayerSpawner" parent="." instance=ExtResource("1_vn5ls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.39128, 0.125246, 7.35702)
+
+[node name="PlayerSpawner2" parent="." instance=ExtResource("1_vn5ls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.86552, 0.777787, -3.62681)
+
+[node name="PlayerSpawner3" parent="." instance=ExtResource("1_vn5ls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2871, 0.777787, -3.62681)
+
+[node name="PlayerSpawner4" parent="." instance=ExtResource("1_vn5ls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8341, 0.777787, -3.62681)
+
+[node name="PlayerSpawner5" parent="." instance=ExtResource("1_vn5ls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.6446, 0.777787, -3.62681)
+
+[node name="PlayerSpawner6" parent="." instance=ExtResource("1_vn5ls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.2416, 0.777787, -3.62681)
+
+[node name="DebugMultiplayer" parent="." instance=ExtResource("3_d8kr4")]
