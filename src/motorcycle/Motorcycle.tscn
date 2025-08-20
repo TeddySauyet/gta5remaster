@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://wmrm34yrs1xa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_el8rj"]
+size = Vector3(0.635803, 1, 1.79544)
+
+[node name="Motorcycle" type="VehicleBody3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(0.521362, 1.01508, 2.00195)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.541674, 0.952974)
+height = 0.391955
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.541674, -1.03009)
+height = 0.391955
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0500336)
+shape = SubResource("BoxShape3D_el8rj")
+
+[node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.40051)
+wheel_radius = 0.36
