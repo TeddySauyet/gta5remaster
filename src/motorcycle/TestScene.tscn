@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://5ic2h2sjmywi"]
+
+[ext_resource type="PackedScene" uid="uid://wmrm34yrs1xa" path="res://src/motorcycle/Motorcycle.tscn" id="1_8qe8p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vskei"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_64et4"]
+sky_material = SubResource("ProceduralSkyMaterial_vskei")
+
+[sub_resource type="Environment" id="Environment_if6dm"]
+background_mode = 2
+sky = SubResource("Sky_64et4")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="TestScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_if6dm")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.51208, -0.310303, -5.89096)
+size = Vector3(100, 0.5, 100)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -10)
+radius = 1.0
+height = 4.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.63441, 0, -10)
+radius = 3.38339
+height = 8.25688
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0124, 0.28323, -1.93844)
+radius = 3.38339
+height = 5.46416
+
+[node name="Motorcycle" parent="." instance=ExtResource("1_8qe8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0518538, 3.01783, 0.0285764)
