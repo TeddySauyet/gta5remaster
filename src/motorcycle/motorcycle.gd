@@ -8,4 +8,4 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	engine_force += delta * 100.0
+	engine_force += delta * 0.0

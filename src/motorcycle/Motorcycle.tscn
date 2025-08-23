@@ -19,10 +19,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0500336)
 shape = SubResource("BoxShape3D_el8rj")
 
 [node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.489536, 0.92488)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66389, -0.489536, 0.92488)
 engine_force = 5.0
 use_as_traction = true
-wheel_roll_influence = 100.0
+wheel_roll_influence = 0.4
 wheel_friction_slip = 1.0
 suspension_stiffness = 50.0
 
@@ -33,10 +33,10 @@ transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.
 height = 0.391955
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.489536, -1.05231)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66389, -0.489536, -1.05231)
 engine_force = 5.0
 use_as_traction = true
-wheel_roll_influence = 100.0
+wheel_roll_influence = 0.4
 wheel_friction_slip = 1.0
 suspension_stiffness = 50.0
 
@@ -46,5 +46,30 @@ suspension_stiffness = 50.0
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.0521379, 0.0222147)
 height = 0.391955
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.982535, 0.186078, 0, -0.186078, 0.982535, 0, 0.995093, 2.56046)
+[node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.489536, 0.92488)
+engine_force = 5.0
+use_as_traction = true
+wheel_roll_influence = 0.4
+wheel_friction_slip = 1.0
+suspension_stiffness = 50.0
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="VehicleWheel3D3"]
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="VehicleWheel3D3/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.0521379, 0.0222147)
+height = 0.391955
+
+[node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.489536, -1.05231)
+engine_force = 5.0
+use_as_traction = true
+wheel_roll_influence = 0.4
+wheel_friction_slip = 1.0
+suspension_stiffness = 50.0
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="VehicleWheel3D4"]
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="VehicleWheel3D4/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.0521379, 0.0222147)
+height = 0.391955

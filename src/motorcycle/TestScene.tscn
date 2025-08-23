@@ -48,3 +48,6 @@ height = 5.46416
 
 [node name="Motorcycle" parent="." instance=ExtResource("1_8qe8p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0518538, 3.01783, 0.0285764)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.964387, 0.264496, 0, -0.264496, 0.964387, 0, 3.41198, 6.34022)
