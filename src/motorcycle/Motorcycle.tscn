@@ -24,7 +24,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108688, 0.92488)
 engine_force = 5.0
 use_as_traction = true
 wheel_roll_influence = 100.0
-wheel_friction_slip = 1.0
+wheel_friction_slip = 10.0
 suspension_stiffness = 50.0
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="VehicleWheel3D"]
@@ -39,7 +39,7 @@ engine_force = 5.0
 use_as_traction = true
 use_as_steering = true
 wheel_roll_influence = 100.0
-wheel_friction_slip = 1.0
+wheel_friction_slip = 10.0
 suspension_stiffness = 50.0
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="VehicleWheel3D2"]
