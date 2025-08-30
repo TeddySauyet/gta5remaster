@@ -7,8 +7,11 @@ var acceleration := Vector3.ZERO
 var save_n_vels := 5
 
 var balance_mag := 5000.0
-var throttle := 20000.0
+var throttle := 500.0
 var steering_force := 10.0
+
+var steering_alpha := 0.0
+var steering_speed := 1.0
 
 @onready var front_wheel: VehicleWheel3D = $VehicleWheel3D2
 @onready var back_wheel: VehicleWheel3D = $VehicleWheel3D
@@ -24,14 +27,25 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	engine_force = delta * throttle * Input.get_axis("throttle_up", "throttle_down")
-	steering = Input.get_axis("roll_right", "roll_left") * 0.25
+	engine_force = throttle * Input.get_axis("throttle_up", "throttle_down")
+	var steering_change = Input.get_axis("roll_right", "roll_left") * steering_speed*delta
+	if steering_change == 0:
+		if steering < 0:
+			steering_change = steering_speed * delta
+		else:
+			steering_change = -steering_speed * delta
+		if abs(steering_change) >= abs(steering):
+			steering_change = -steering
+	steering += steering_change
+	steering = clampf(steering, -1.0, 1.0)
+	#steering = Input.get_axis("roll_right", "roll_left") * 0.25
+	print_debug(steering,'|',steering_change, '|',velocity.length()/delta)
 	#steering = delta * steering_force * Input.get_axis("roll_right", "roll_left")
 	#update_acceleration()
 	#set_roll()
 
 func _physics_process(_delta: float) -> void:
-	#update_acceleration()
+	update_acceleration()
 	#set_roll()
 	pass
 

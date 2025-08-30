@@ -25,6 +25,7 @@ shadow_enabled = true
 environment = SubResource("Environment_if6dm")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.999882, 0.0153583, 0, -0.0153583, 0.999882, 0, 0, 0, 1, 0, 0, 0)
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
@@ -50,5 +51,5 @@ height = 5.46416
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0518538, 1.35243, 0.0285764)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.95138, 0.308021, 0, -0.308021, 0.95138, 0, 6.04918, 6.95086)
+transform = Transform3D(1, 0, 0, 0, 0.52703, 0.849847, 0, -0.849847, 0.52703, 0, 142.484, 6.95086)
 current = true
