@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://5ic2h2sjmywi"]
 
-[ext_resource type="PackedScene" uid="uid://wmrm34yrs1xa" path="res://src/motorcycle/Motorcycle.tscn" id="1_8qe8p"]
+[ext_resource type="PackedScene" uid="uid://do7w6ao78pxsk" path="res://src/motorcycle/motorcycle2.tscn" id="1_slviy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vskei"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,6 +16,9 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="TestScene" type="Node3D"]
+
+[node name="Motorcycle2" parent="." instance=ExtResource("1_slviy")]
+transform = Transform3D(0.999882, 0.0153583, 0, -0.0153583, 0.999882, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -47,9 +50,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0124, 0.28323, -1.93844)
 radius = 3.38339
 height = 5.46416
 
-[node name="Motorcycle" parent="." instance=ExtResource("1_8qe8p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0518538, 1.35243, 0.0285764)
-
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.52703, 0.849847, 0, -0.849847, 0.52703, 0, 142.484, 6.95086)
-current = true
+transform = Transform3D(1, 0, 0, 0, 0.969876, 0.243598, 0, -0.243598, 0.969876, 0, 2.70748, 5.1402)

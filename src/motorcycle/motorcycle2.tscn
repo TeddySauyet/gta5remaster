@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://do7w6ao78pxsk"]
+
+[ext_resource type="Script" path="res://src/motorcycle/motorcycle_2.gd" id="1_x3ca5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_run51"]
+size = Vector3(0.77, 1.31295, 2.295)
+
+[node name="Motorcycle2" type="CharacterBody3D"]
+script = ExtResource("1_x3ca5")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(0.71, 0.72, 2.375)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.579507, 1.16001)
+radius = 0.45631
+height = 0.2
+sides = 16
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.579507, -1.22973)
+radius = 0.45631
+height = 0.2
+sides = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.366475, 0)
+shape = SubResource("BoxShape3D_run51")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.933787, 0.35783, 0, -0.35783, 0.933787, 0, 1.11262, 2.73825)
