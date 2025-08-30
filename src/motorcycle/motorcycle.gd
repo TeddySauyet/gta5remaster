@@ -31,8 +31,8 @@ func _process(delta: float) -> void:
 	#set_roll()
 
 func _physics_process(_delta: float) -> void:
-	update_acceleration()
-	set_roll()
+	#update_acceleration()
+	#set_roll()
 	pass
 
 ## Call from physics process pls
@@ -52,8 +52,8 @@ func set_roll() -> void:
 	var desired_x_dir := transform.basis.x
 	desired_x_dir.y = 0.0
 	var angle := transform.basis.x.signed_angle_to(desired_x_dir,-transform.basis.z)
-	apply_force(angle*Vector3.RIGHT*balance_mag, rider_seat.position)
-	apply_force(angle*Vector3.LEFT*balance_mag, rider_feet.position)
+	#apply_force(angle*Vector3.RIGHT*balance_mag, rider_seat.position)
+	#apply_force(angle*Vector3.LEFT*balance_mag, rider_feet.position)
 	#print_debug(angle*Vector3.RIGHT*balance_mag)
 	#transform = transform.rotated_local(-transform.basis.z,angle)
 	#to account for weird drifting problems
