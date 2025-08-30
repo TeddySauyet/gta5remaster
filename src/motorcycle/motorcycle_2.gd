@@ -1,10 +1,12 @@
 extends CharacterBody3D
 class_name Motorcyle
 
-var speed = 0.0
-var max_speed := 90.0
-var acceleration := 22.5
+var max_speed := 60.0
+var acceleration := 10.0
+var max_angle := 45.0/180.0*PI
+var max_steering := 45.0/180.0*PI
 
+var speed = 0.0
 var steering := 0.0
 var steering_speed := 0.1
 
@@ -19,9 +21,16 @@ func _physics_process(delta: float) -> void:
 		if steering < 0.05:
 			steering = 0
 	
-	transform = transform.rotated_local(transform.basis.y, steering)
+	steering = clampf(steering, -max_steering, max_steering)
+	
+	var angle := transform.basis.y.angle_to(Vector3.UP) * signf(transform.basis.x.dot(Vector3.UP))
+	var desired_angle := steering*absf(speed)/(max_steering*max_speed) * max_angle
 	
 	
+	transform = transform.rotated_local(transform.basis.y.normalized(), steering)
+	#transform = transform.rotated_local(transform.basis.z, desired_angle - angle)
+	
+	print_debug(desired_angle,'|',angle)
 	var delta_speed := Input.get_axis("throttle_down", "throttle_up") * delta * acceleration
 	delta_speed = clampf(delta_speed, -speed, max_speed-speed)
 	
@@ -37,4 +46,3 @@ func _physics_process(delta: float) -> void:
 		time_since_on_floor = 0
 		
 	move_and_slide()
-	print_debug(speed,'|',delta_speed)
