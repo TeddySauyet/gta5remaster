@@ -17,8 +17,22 @@ var gear_min_disadvantage := 0.65
 
 var time_since_on_floor = 0.0
 
+var steering_input := 0.0
+var throttle_input := 0.0
+
+func set_inputs() -> void:
+	steering_input = Input.get_axis("roll_right", "roll_left")
+	throttle_input = Input.get_axis("throttle_down", "throttle_up")
+
+func is_authority() -> bool:
+	return multiplayer.get_unique_id() == get_multiplayer_authority()
+
 func _physics_process(delta: float) -> void:
-	var steering_delta = Input.get_axis("roll_right", "roll_left") * delta*steering_speed
+	if is_authority():
+		set_inputs()
+	var steering_delta = steering_input * delta*steering_speed
+	if signf(steering_delta) != signf(steering):
+		steering_delta *= 2
 	if steering_delta != 0:
 		steering = steering + steering_delta
 	else:
@@ -40,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	$CSGCombiner3D.transform = Transform3D.IDENTITY
 	$CSGCombiner3D.transform = $CSGCombiner3D.transform.rotated_local(-$CSGCombiner3D.transform.basis.z, desired_angle)
 	
-	var delta_speed := Input.get_axis("throttle_down", "throttle_up") * delta * acceleration
+	var delta_speed := throttle_input * delta * acceleration
 	
 	var dist_to_current_gear := speed_per_gear*current_gear - speed/current_gear
 	var gear_disadvantage := lerpf(1.0, gear_min_disadvantage,absf(dist_to_current_gear)/speed_per_gear)
@@ -64,4 +78,4 @@ func _physics_process(delta: float) -> void:
 		time_since_on_floor = 0
 		
 	move_and_slide()
-	print_debug(velocity.length(), '|', gear_disadvantage)
+	#print_debug(velocity.length(), '|', gear_disadvantage)

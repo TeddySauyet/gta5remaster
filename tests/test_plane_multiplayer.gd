@@ -9,10 +9,12 @@ func _ready() -> void:
 	spawners = [$PlayerSpawner2, $PlayerSpawner3, $PlayerSpawner4, $PlayerSpawner5, $PlayerSpawner6]
 	multiplayer.peer_connected.connect(on_peer_connected)
 	$DebugMultiplayer.debug_start_network()
+	if multiplayer.is_server():
+		on_peer_connected(1)
 	
 func on_peer_connected(id : int) -> void:
 	n_players += 1
-	if multiplayer.is_server() and n_players == max_players - 1:
+	if multiplayer.is_server() and n_players == max_players:
 		$PlayerSpawner.spawn_player.rpc(1)
 		var peers = multiplayer.get_peers()
 		for idx in  range(peers.size()):

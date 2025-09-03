@@ -4,13 +4,15 @@ class_name PlayerSpawner
 enum PLAYER_SCENES
 {
 	PLANE,
+	MOTORCYCLE,
 }
 
 var scene_path_map := {
-	PLAYER_SCENES.PLANE: "res://src/plane/Plane.tscn"
+	PLAYER_SCENES.PLANE: "res://src/plane/Plane.tscn",
+	PLAYER_SCENES.MOTORCYCLE: "res://src/motorcycle/motorcycle2.tscn",
 }
 
-@export var player_scene : PLAYER_SCENES = PLAYER_SCENES.PLANE
+@export var player_scene : PLAYER_SCENES = PLAYER_SCENES.MOTORCYCLE
 
 @rpc("authority", "reliable", "call_local")
 func spawn_player(player_id : int) -> void:
