@@ -1,9 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://do7w6ao78pxsk"]
+[gd_scene load_steps=4 format=3 uid="uid://do7w6ao78pxsk"]
 
 [ext_resource type="Script" path="res://src/motorcycle/motorcycle_2.gd" id="1_x3ca5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_run51"]
 size = Vector3(0.77, 1.31295, 2.295)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ssv7r"]
+properties/0/path = NodePath(".:steering_input")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:throttle_input")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:transform")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="Motorcycle2" type="CharacterBody3D"]
 script = ExtResource("1_x3ca5")
@@ -31,3 +42,6 @@ shape = SubResource("BoxShape3D_run51")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.933787, 0.35783, 0, -0.35783, 0.933787, 0, 1.11262, 2.73825)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ssv7r")

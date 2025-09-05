@@ -12,7 +12,7 @@ var scene_path_map := {
 	PLAYER_SCENES.MOTORCYCLE: "res://src/motorcycle/motorcycle2.tscn",
 }
 
-@export var player_scene : PLAYER_SCENES = PLAYER_SCENES.MOTORCYCLE
+@export var player_scene : PLAYER_SCENES = PLAYER_SCENES.PLANE
 
 @rpc("authority", "reliable", "call_local")
 func spawn_player(player_id : int) -> void:
