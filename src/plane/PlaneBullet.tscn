@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://438lmwy7ccl1"]
+
+[ext_resource type="Script" path="res://src/plane/plane_bullet.gd" id="1_2ie3u"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ik3m6"]
+radius = 0.08
+height = 0.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oin0c"]
+radius = 0.08
+height = 0.4
+
+[node name="PlaneBullet" type="RigidBody3D"]
+script = ExtResource("1_2ie3u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_ik3m6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_oin0c")

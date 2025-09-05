@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8qm2tbths36o"]
+[gd_scene load_steps=8 format=3 uid="uid://c8qm2tbths36o"]
 
 [ext_resource type="Script" path="res://tests/test_plane_multiplayer.gd" id="1_pr0in"]
 [ext_resource type="PackedScene" uid="uid://jniya483s4b0" path="res://unorganized/player_spawner.tscn" id="1_vn5ls"]
 [ext_resource type="PackedScene" uid="uid://dmuknn8eypng1" path="res://src/utilities/debug_multiplayer.tscn" id="3_d8kr4"]
+[ext_resource type="PackedScene" uid="uid://438lmwy7ccl1" path="res://src/plane/PlaneBullet.tscn" id="4_8k03m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s5aon"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -65,3 +66,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.6446, 0.777787, -3.62681)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.2416, 0.777787, -3.62681)
 
 [node name="DebugMultiplayer" parent="." instance=ExtResource("3_d8kr4")]
+
+[node name="PlaneBullet" parent="." instance=ExtResource("4_8k03m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.23693, 0.342169, 4.59701)

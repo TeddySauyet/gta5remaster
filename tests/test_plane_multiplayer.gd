@@ -1,7 +1,7 @@
 extends Node3D
 
 var n_players = 0
-var max_players = 2
+var max_players = 1
 
 var spawners : Array[PlayerSpawner]
 
