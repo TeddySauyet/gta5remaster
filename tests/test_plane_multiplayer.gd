@@ -1,7 +1,7 @@
 extends Node3D
 
 var n_players = 0
-var max_players = 1
+var max_players = 2
 
 var spawners : Array[PlayerSpawner]
 
@@ -11,6 +11,7 @@ func _ready() -> void:
 	$DebugMultiplayer.debug_start_network()
 	if multiplayer.is_server():
 		on_peer_connected(1)
+	EntitySpawner.spawn_parent = self
 	
 func on_peer_connected(id : int) -> void:
 	n_players += 1

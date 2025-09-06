@@ -69,6 +69,11 @@ func set_input_state() -> void:
 func _physics_process(delta):
 	if is_authority():
 		set_input_state()
+		if Input.is_action_just_pressed("primary_weapon"):
+			var bullet := preload("res://src/plane/PlaneBullet.tscn").instantiate()
+			bullet.transform = $BulletSpawnPoint.global_transform
+			EntitySpawner.spawn_item(bullet)
+			
 	get_input(delta)
 	# Rotate the transform based on the input values
 	transform.basis = transform.basis.rotated(transform.basis.x, pitch_input * pitch_speed * delta)
