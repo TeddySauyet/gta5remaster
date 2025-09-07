@@ -72,7 +72,9 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("primary_weapon"):
 			var bullet := preload("res://src/plane/PlaneBullet.tscn").instantiate()
 			bullet.transform = $BulletSpawnPoint.global_transform
-			EntitySpawner.spawn_item(bullet)
+			EntitySpawner.spawn_item({
+				CEntitySpawner.Config.PATH: "res://src/plane/PlaneBullet.tscn"
+				})
 			
 	get_input(delta)
 	# Rotate the transform based on the input values
