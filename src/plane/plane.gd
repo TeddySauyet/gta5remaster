@@ -70,10 +70,11 @@ func _physics_process(delta):
 	if is_authority():
 		set_input_state()
 		if Input.is_action_just_pressed("primary_weapon"):
-			var bullet := preload("res://src/plane/PlaneBullet.tscn").instantiate()
-			bullet.transform = $BulletSpawnPoint.global_transform
+			#var bullet := preload("res://src/plane/PlaneBullet.tscn").instantiate()
+			#bullet.transform = $BulletSpawnPoint.global_transform
 			EntitySpawner.spawn_item({
-				CEntitySpawner.Config.PATH: "res://src/plane/PlaneBullet.tscn"
+				CEntitySpawner.Config.PATH: "res://src/plane/PlaneBullet.tscn",
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: $BulletSpawnPoint.global_transform
 				})
 			
 	get_input(delta)

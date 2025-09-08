@@ -7,11 +7,13 @@ enum Config
 {
 	PATH,
 	SPAWNER_ID,
+	GLOBAL_TRANSFORM,
 }
 
 static var config_types : Dictionary = {
 	Config.PATH: String(""),
 	Config.SPAWNER_ID: int(0),
+	Config.GLOBAL_TRANSFORM: Transform3D()
 } 
 
 func set_spawn_parent(value : Node3D) -> void:
@@ -31,4 +33,14 @@ func _server_spawn_item(config : Dictionary) -> void:
 @rpc("call_local", "authority", "reliable")
 func _client_spawn_item(config : Dictionary) -> void:
 	print_debug("_client_spawn_item on ", multiplayer.get_unique_id() , ", config = ", config)
-	#spawn_parent.add_child(item)
+	var item : Node3D
+	if Config.PATH in config:
+		item = load(config[Config.PATH]).instantiate()
+	else:
+		return
+	if item.has_method("set_spawner_id") and Config.SPAWNER_ID in config:
+		item.set_spawner_id(config[Config.SPAWNER_ID])
+	if Config.GLOBAL_TRANSFORM in config:
+		item.global_transform = config[Config.GLOBAL_TRANSFORM]
+	spawn_parent.add_child(item)
+	
