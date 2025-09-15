@@ -126,3 +126,7 @@ func get_input(delta  : float):
 
 func is_authority() -> bool:
 	return get_multiplayer_authority() == multiplayer.get_unique_id()
+
+
+func receive_damage(dmg : DamageInstance) -> void:
+	print_debug("Argh! I've been shot by ", dmg.source_name, "!")

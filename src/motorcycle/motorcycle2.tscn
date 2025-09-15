@@ -17,6 +17,8 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="Motorcycle2" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_x3ca5")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]

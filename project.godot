@@ -61,6 +61,13 @@ primary_weapon={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Geometry"
+3d_physics/layer_2="Planes"
+3d_physics/layer_3="Motorcycles"
+3d_physics/layer_4="Weapons"
+
 [physics]
 
 3d/physics_engine="Jolt Physics (Extension)"

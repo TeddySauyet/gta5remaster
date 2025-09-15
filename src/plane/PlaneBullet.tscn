@@ -11,6 +11,8 @@ radius = 0.08
 height = 0.4
 
 [node name="PlaneBullet" type="RigidBody3D"]
+contact_monitor = true
+max_contacts_reported = 4
 script = ExtResource("1_2ie3u")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

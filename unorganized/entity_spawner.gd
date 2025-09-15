@@ -32,7 +32,7 @@ func _server_spawn_item(config : Dictionary) -> void:
 	
 @rpc("call_local", "authority", "reliable")
 func _client_spawn_item(config : Dictionary) -> void:
-	print_debug("_client_spawn_item on ", multiplayer.get_unique_id() , ", config = ", config)
+	#print_debug("_client_spawn_item on ", multiplayer.get_unique_id() , ", config = ", config)
 	var item : Node3D
 	if Config.PATH in config:
 		item = load(config[Config.PATH]).instantiate()

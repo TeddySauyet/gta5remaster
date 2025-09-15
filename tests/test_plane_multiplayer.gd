@@ -12,7 +12,7 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		on_peer_connected(1)
 	EntitySpawner.spawn_parent = self
-	
+
 func on_peer_connected(id : int) -> void:
 	n_players += 1
 	if multiplayer.is_server() and n_players == max_players:
