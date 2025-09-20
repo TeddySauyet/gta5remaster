@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqixro3ht6sdy"]
+
+[ext_resource type="Script" path="res://menus/lobby_player_display.gd" id="1_18u2r"]
+
+[node name="LobbyPlayerDisplay" type="Label"]
+script = ExtResource("1_18u2r")
