@@ -1,11 +1,27 @@
 extends Node
 class_name CGameInstance
 
-# Called when the node enters the scene tree for the first time.
+var lobby_menu : CLobbyMenu = null
+
 func _ready() -> void:
-	pass # Replace with function body.
+	GameState.state_changed.connect(on_game_state_changed)
+	if multiplayer.is_server():
+		GameState.state = CGameState.GAME_STATE.LOBBY
+	else:
+		if GameState.state == CGameState.GAME_STATE.LOBBY:
+			open_lobby_menu()
 
+func on_game_state_changed() -> void:
+	match GameState.state:
+		CGameState.GAME_STATE.LOBBY:
+			open_lobby_menu()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func open_lobby_menu() -> void:
+	lobby_menu = preload("res://menus/lobby/LobbyMenu.tscn").instantiate()
+	add_child(lobby_menu)
+
+func reset() -> void:
+	if lobby_menu:
+		remove_child(lobby_menu)
+		lobby_menu.queue_free()
+		lobby_menu = null

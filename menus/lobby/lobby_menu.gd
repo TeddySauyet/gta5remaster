@@ -1,12 +1,12 @@
 extends Control
-class_name LobbyMenu
+class_name CLobbyMenu
 
 @onready var player_display_parent : Container = $VBoxContainer
 
 func _ready() -> void:
 	GameState.players_changed.connect(update_players)
 	for player in GameState.players:
-		var scene := preload("res://menus/LobbyPlayerDisplay.tscn").instantiate()
+		var scene := preload("res://menus/lobby/LobbyPlayerDisplay.tscn").instantiate()
 		player_display_parent.add_child(scene)
 		scene.player = player
 	$HBoxContainer/Button.pressed.connect(debug_player_enter)
@@ -18,7 +18,7 @@ func update_players() -> void:
 			current_ids.push_back(child.player)
 	for player in GameState.players:
 		if not player in current_ids:
-			var scene := preload("res://menus/LobbyPlayerDisplay.tscn").instantiate()
+			var scene := preload("res://menus/lobby/LobbyPlayerDisplay.tscn").instantiate()
 			player_display_parent.add_child(scene)
 			scene.player = player
 

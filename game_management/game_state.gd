@@ -12,7 +12,8 @@ enum GAME_STATE
 	LOBBY,
 	MAP_LOAD,
 	PLAYING,
-	END_SCREEN
+	ROUND_END,
+	END_SCREEN,
 }
 
 enum PLAYER_STATE
@@ -47,12 +48,24 @@ class CPlayerInfo:
 		result.name = name
 		result.id = id
 		return result
+	func serialize() -> Dictionary:
+		return {'state': state,
+			'team': team,
+			'name': name,
+			'id': id}
+	static func deserialize(data : Dictionary) -> CPlayerInfo:
+		var result := CPlayerInfo.new()
+		result.state = data['state']
+		result.team = data['team']
+		result.name = data['name']
+		result.id = data['id']
+		return result
 
 var state := GAME_STATE.NONE : set = set_state
-signal state_changed(new_value : GAME_STATE)
+signal state_changed()
 func set_state(value : GAME_STATE) -> void:
 	state = value
-	state_changed.emit(state)
+	state_changed.emit()
 
 ## int : CPlayerInfo
 var players : Dictionary = {} : set = set_players
@@ -63,12 +76,29 @@ func set_players(value : Dictionary) -> void:
 		assert(typeof(key) == TYPE_INT)
 		assert(value[key] is CPlayerInfo)
 	players = value
-	players_changed.emit()
+	#note: do this manually cause of dictionary operations
+	#players_changed.emit()
 	
 func _process(_delta: float) -> void:
 	check_players_changed()
 	copy_players_to_last_frame_players()
-	
+	if multiplayer.is_server():
+		sync_game_state()
+
+func sync_game_state() -> void:
+	var data := {"state": state, "players": {}}
+	for player in players:
+		data["players"][player] = players[player].serialize()
+	rpc_game_state.rpc(data)
+
+@rpc("authority", "call_remote", "unreliable_ordered")
+func rpc_game_state(data : Dictionary) -> void:
+	state = data["state"]
+	var new_players := {}
+	for player in data['players']:
+		new_players[player] = CPlayerInfo.deserialize(data['players'][player])
+	players = new_players
+
 func check_players_changed() -> void:
 	if players.size() != last_frame_players.size():
 		players_changed.emit()
