@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddypsqmuuy17q"]
+[gd_scene load_steps=3 format=3 uid="uid://ddypsqmuuy17q"]
 
 [ext_resource type="Script" path="res://game_management/app.gd" id="1_4g6h1"]
+[ext_resource type="PackedScene" uid="uid://dmuknn8eypng1" path="res://src/utilities/debug_multiplayer.tscn" id="2_rsg87"]
 
 [node name="App" type="Node"]
 script = ExtResource("1_4g6h1")
+
+[node name="DebugMultiplayer" parent="." instance=ExtResource("2_rsg87")]
