@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkwrtqk53ob5y"]
+[gd_scene load_steps=4 format=3 uid="uid://bkwrtqk53ob5y"]
 
 [ext_resource type="Script" path="res://menus/lobby/lobby_menu.gd" id="1_e2ljq"]
+[ext_resource type="Script" path="res://menus/lobby/lobby_team_display.gd" id="2_kcyvc"]
+[ext_resource type="PackedScene" uid="uid://cklgulxwqn7yo" path="res://menus/lobby/LobbyPlayerInfo.tscn" id="3_stpsw"]
 
 [node name="LobbyMenu" type="Control"]
 layout_mode = 3
@@ -11,23 +13,74 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e2ljq")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 101.0
-offset_top = 142.0
-offset_right = 389.0
-offset_bottom = 492.0
-
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -389.5
+offset_top = -222.5
+offset_right = 389.5
+offset_bottom = 222.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Unassigned"
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_kcyvc")
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Team A"
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+script = ExtResource("2_kcyvc")
+team = 1
+
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Team B"
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+script = ExtResource("2_kcyvc")
+team = 2
+
+[node name="LobbyPlayerInfo" parent="." instance=ExtResource("3_stpsw")]
 layout_mode = 0
-offset_left = 429.0
-offset_top = 170.0
-offset_right = 575.0
-offset_bottom = 210.0
-
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Add player"
+offset_left = 43.0
+offset_top = 204.0
+offset_right = 150.0
+offset_bottom = 375.0

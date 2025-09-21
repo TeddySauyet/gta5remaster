@@ -64,8 +64,10 @@ class CPlayerInfo:
 var state := GAME_STATE.NONE : set = set_state
 signal state_changed()
 func set_state(value : GAME_STATE) -> void:
+	var flag : bool = value != state
 	state = value
-	state_changed.emit()
+	if flag:
+		state_changed.emit()
 
 ## int : CPlayerInfo
 var players : Dictionary = {} : set = set_players

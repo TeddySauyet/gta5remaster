@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://n5omr4yjnuop"]
+
+[ext_resource type="Script" path="res://menus/lobby/lobby_team_display.gd" id="1_hdur4"]
+
+[node name="LobbyTeamDisplay" type="VBoxContainer"]
+script = ExtResource("1_hdur4")

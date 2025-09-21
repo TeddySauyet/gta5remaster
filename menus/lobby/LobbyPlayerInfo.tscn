@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cklgulxwqn7yo"]
+
+[ext_resource type="Script" path="res://menus/lobby/lobby_player_info.gd" id="1_jia8v"]
+
+[node name="LobbyPlayerInfo" type="VBoxContainer"]
+script = ExtResource("1_jia8v")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "All about you!"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="LineEditName" type="LineEdit" parent="."]
+layout_mode = 2
+
+[node name="ButtonSpectate" type="Button" parent="."]
+layout_mode = 2
+text = "Spectate"
+
+[node name="ButtonJoinTeamA" type="Button" parent="."]
+layout_mode = 2
+text = "Join Team A"
+
+[node name="ButtonJoinTeamB" type="Button" parent="."]
+layout_mode = 2
+text = "Join Team B"
