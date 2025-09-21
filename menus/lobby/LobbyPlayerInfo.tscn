@@ -26,3 +26,7 @@ text = "Join Team A"
 [node name="ButtonJoinTeamB" type="Button" parent="."]
 layout_mode = 2
 text = "Join Team B"
+
+[node name="ButtonReadyUp" type="Button" parent="."]
+layout_mode = 2
+text = "Ready Up!"

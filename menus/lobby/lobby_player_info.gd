@@ -5,6 +5,7 @@ class_name CLobbyPlayerInfo
 @onready var button_spectate: Button = $ButtonSpectate
 @onready var button_join_team_a: Button = $ButtonJoinTeamA
 @onready var button_join_team_b: Button = $ButtonJoinTeamB
+@onready var button_ready_up: Button = $ButtonReadyUp
 
 
 func _ready() -> void:
@@ -24,6 +25,7 @@ func initialize() -> void:
 	button_spectate.pressed.connect(on_spectate_pressed)
 	button_join_team_a.pressed.connect(on_join_team_a_pressed)
 	button_join_team_b.pressed.connect(on_join_team_b_pressed)
+	button_ready_up.pressed.connect(on_ready_up_pressed)
 	
 func on_name_changed(new_text : String) -> void:
 	var id := multiplayer.get_unique_id()
@@ -42,7 +44,17 @@ func on_join_team_a_pressed() -> void:
 	
 func on_join_team_b_pressed() -> void:
 	set_new_team.rpc_id(1, CGameState.PLAYER_TEAM.B)
+
+func on_ready_up_pressed() -> void:
+	ready_up.rpc_id(1)
 	
+@rpc("any_peer", "reliable", "call_local")
+func ready_up() -> void:
+	var id := multiplayer.get_remote_sender_id()
+	#print_debug("Ready up pressed by ", id, " on ", multiplayer.get_unique_id())
+	GameState.players[id].ready_for_game_start = true
+	#for i in GameState.players:
+		#print_debug(i, ": ", GameState.players[i].ready_for_game_start)
 	
 @rpc("any_peer", "reliable", "call_local")
 func set_new_team(team : CGameState.PLAYER_TEAM) -> void:

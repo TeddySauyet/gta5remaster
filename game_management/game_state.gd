@@ -35,30 +35,36 @@ class CPlayerInfo:
 	var state := PLAYER_STATE.NONE
 	var team := PLAYER_TEAM.NONE
 	var name : String = "CPlayerInfo default name"
-	var id : int
+	var ready_for_game_start : bool = false
+	var ready_for_map_start : bool = false
 	func equals(other : CPlayerInfo) -> bool:
 		return state == other.state and \
 			team == other.team and \
 			name == other.name and \
-			id == other.id 
+			ready_for_game_start == other.ready_for_game_start and \
+			ready_for_map_start == other.ready_for_map_start
 	func copy() -> CPlayerInfo:
 		var result := CPlayerInfo.new()
 		result.state = state
 		result.team = team
 		result.name = name
-		result.id = id
+		result.ready_for_game_start = ready_for_game_start
+		result.ready_for_map_start = ready_for_map_start
 		return result
 	func serialize() -> Dictionary:
 		return {'state': state,
 			'team': team,
 			'name': name,
-			'id': id}
+			'ready_for_game_start': ready_for_game_start,
+			'ready_for_map_start': ready_for_map_start,
+			}
 	static func deserialize(data : Dictionary) -> CPlayerInfo:
 		var result := CPlayerInfo.new()
 		result.state = data['state']
 		result.team = data['team']
 		result.name = data['name']
-		result.id = data['id']
+		result.ready_for_game_start = data['ready_for_game_start']
+		result.ready_for_map_start = data['ready_for_map_start']
 		return result
 
 var state := GAME_STATE.NONE : set = set_state

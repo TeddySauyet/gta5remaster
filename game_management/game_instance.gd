@@ -17,15 +17,16 @@ func _ready() -> void:
 func on_player_connected(id : int) -> void:
 	assert(not id in GameState.players)
 	GameState.players[id] = CGameState.CPlayerInfo.new()
-	GameState.players[id].id = id
 
 func on_game_state_changed() -> void:
 	match GameState.state:
 		CGameState.GAME_STATE.LOBBY:
 			open_lobby_menu()
+		CGameState.GAME_STATE.MAP_LOAD:
+			reset()
 
 func open_lobby_menu() -> void:
-	print_debug(multiplayer.get_unique_id(), " opened lobby menu")
+	#print_debug(multiplayer.get_unique_id(), " opened lobby menu")
 	reset()
 	lobby_menu = preload("res://menus/lobby/LobbyMenu.tscn").instantiate()
 	add_child(lobby_menu)
@@ -35,3 +36,15 @@ func reset() -> void:
 		remove_child(lobby_menu)
 		lobby_menu.queue_free()
 		lobby_menu = null
+
+func _process(delta: float) -> void:
+	match GameState.state:
+		CGameState.GAME_STATE.LOBBY:
+			if multiplayer.is_server():
+				var ready_game_start := true
+				for player in GameState.players:
+					if not GameState.players[player].ready_for_game_start:
+						ready_game_start = false
+						break
+				if ready_game_start:
+					GameState.state = CGameState.GAME_STATE.MAP_LOAD
