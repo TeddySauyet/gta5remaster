@@ -24,6 +24,7 @@ func on_game_state_changed() -> void:
 			open_lobby_menu()
 		CGameState.GAME_STATE.MAP_LOAD:
 			reset()
+			open_game_map()
 
 func open_lobby_menu() -> void:
 	#print_debug(multiplayer.get_unique_id(), " opened lobby menu")
@@ -48,3 +49,6 @@ func _process(delta: float) -> void:
 						break
 				if ready_game_start:
 					GameState.state = CGameState.GAME_STATE.MAP_LOAD
+
+func open_game_map() -> void:
+	pass
