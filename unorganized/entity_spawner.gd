@@ -8,12 +8,16 @@ enum Config
 	PATH,
 	SPAWNER_ID,
 	GLOBAL_TRANSFORM,
+	MULTIPLAYER_AUTHORITY,
+	SET_CAMERA3D,
 }
 
 static var config_types : Dictionary = {
 	Config.PATH: String(""),
 	Config.SPAWNER_ID: int(0),
-	Config.GLOBAL_TRANSFORM: Transform3D()
+	Config.GLOBAL_TRANSFORM: Transform3D(),
+	Config.MULTIPLAYER_AUTHORITY: int(1),
+	Config.SET_CAMERA3D: bool(false),
 } 
 
 func set_spawn_parent(value : Node3D) -> void:
@@ -43,4 +47,13 @@ func _client_spawn_item(config : Dictionary) -> void:
 	if Config.GLOBAL_TRANSFORM in config:
 		item.global_transform = config[Config.GLOBAL_TRANSFORM]
 	spawn_parent.add_child(item)
+	if Config.MULTIPLAYER_AUTHORITY in config:
+		item.set_multiplayer_authority(config[Config.MULTIPLAYER_AUTHORITY])
+	if Config.SET_CAMERA3D in config:
+		if config[Config.SET_CAMERA3D]:
+			if multiplayer.get_unique_id() == item.get_multiplayer_authority():
+				item.find_child("Camera3D").current = true
+			else:
+				item.find_child("Camera3D").current = false
+				
 	

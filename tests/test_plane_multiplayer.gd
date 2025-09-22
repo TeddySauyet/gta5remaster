@@ -19,4 +19,10 @@ func on_peer_connected(id : int) -> void:
 		$PlayerSpawner.spawn_player.rpc(1)
 		var peers = multiplayer.get_peers()
 		for idx in  range(peers.size()):
-			spawners[idx].spawn_player.rpc(peers[idx])
+			#spawners[idx].spawn_player.rpc(peers[idx])
+			EntitySpawner.spawn_item({
+				CEntitySpawner.Config.PATH: "res://src/plane/Plane.tscn",
+				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: peers[idx],
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: spawners[idx].global_transform,
+				CEntitySpawner.Config.SET_CAMERA3D: true
+			})

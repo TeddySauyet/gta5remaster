@@ -25,6 +25,7 @@ func on_game_state_changed() -> void:
 		CGameState.GAME_STATE.MAP_LOAD:
 			reset()
 			open_game_map()
+			set_map_ready.rpc_id(1)
 
 func open_lobby_menu() -> void:
 	#print_debug(multiplayer.get_unique_id(), " opened lobby menu")
@@ -49,6 +50,21 @@ func _process(delta: float) -> void:
 						break
 				if ready_game_start:
 					GameState.state = CGameState.GAME_STATE.MAP_LOAD
+		CGameState.GAME_STATE.MAP_LOAD:
+			if multiplayer.is_server():
+				var ready_map_start := true
+				for player in GameState.players:
+					if not GameState.players[player].ready_for_map_start:
+						ready_map_start = false
+						break
+				if ready_map_start:
+					GameState.state = CGameState.GAME_STATE.PLAYING
 
 func open_game_map() -> void:
-	pass
+	var map := preload("res://src/map/Map.tscn").instantiate()
+	add_child(map)
+
+@rpc("any_peer", "reliable", "call_local")
+func set_map_ready() -> void:
+	var id := multiplayer.get_remote_sender_id()
+	GameState.players[id].ready_for_map_start = true
