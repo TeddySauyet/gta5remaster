@@ -19,7 +19,3 @@ func debug_start() -> void:
 func start_game() -> void:
 	game_instance = preload("res://game_management/GameInstance.tscn").instantiate()
 	add_child(game_instance)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

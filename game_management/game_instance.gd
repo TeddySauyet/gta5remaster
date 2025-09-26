@@ -26,6 +26,8 @@ func on_game_state_changed() -> void:
 			reset()
 			open_game_map()
 			set_map_ready.rpc_id(1)
+		CGameState.GAME_STATE.PLAYING:
+			print_debug("Playing on ", multiplayer.get_unique_id())
 
 func open_lobby_menu() -> void:
 	#print_debug(multiplayer.get_unique_id(), " opened lobby menu")
@@ -39,7 +41,7 @@ func reset() -> void:
 		lobby_menu.queue_free()
 		lobby_menu = null
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	match GameState.state:
 		CGameState.GAME_STATE.LOBBY:
 			if multiplayer.is_server():

@@ -19,12 +19,12 @@ func update() -> void:
 	for player in GameState.players:
 		if GameState.players[player].team == team:
 			var present := false
-			var idx := -1
+			var jdx := -1
 			for child in children:
-				idx += 1
+				jdx += 1
 				if child is CLobbyPlayerDisplay:
 					if child.player == player:
-						verified[idx] = true
+						verified[jdx] = true
 						present = true
 						break
 			if not present:

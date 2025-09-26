@@ -31,7 +31,7 @@ func spawn_item(config : Dictionary) -> void:
 	
 @rpc("call_local", "any_peer", "reliable")
 func _server_spawn_item(config : Dictionary) -> void:
-	var id := multiplayer.get_remote_sender_id()
+	#var id := multiplayer.get_remote_sender_id()
 	_client_spawn_item.rpc(config)
 	
 @rpc("call_local", "authority", "reliable")
