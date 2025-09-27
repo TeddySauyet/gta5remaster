@@ -1,6 +1,9 @@
 extends Node3D
 class_name CMap
 
+@onready var motorcycle_start: Node3D = $MotorcycleStart
+@onready var plane_start: Node3D = $PlaneStart
+
 
 func _ready() -> void:
 	GameState.state_changed.connect(on_gamestate_changed)
@@ -14,4 +17,15 @@ func on_gamestate_changed() -> void:
 
 
 func spawn_players() -> void:
-	pass
+	var n_motorcycles := 0
+	var n_planes := 0
+	var motorcycle_delta := 3.0
+	var plane_delta := 3.0
+	for player in GameState.players:
+		if GameState.players[player].team == GameState.team_motorcycle:
+			EntitySpawner.spawn_item({
+				CEntitySpawner.Config.PATH: "res://src/plane/Plane.tscn",
+				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: peers[idx],
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: spawners[idx].global_transform,
+				CEntitySpawner.Config.SET_CAMERA3D: true
+			})

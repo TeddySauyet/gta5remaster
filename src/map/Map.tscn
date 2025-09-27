@@ -4,3 +4,51 @@
 
 [node name="Map" type="Node3D"]
 script = ExtResource("1_xjq0r")
+
+[node name="DebugGeometry" type="CSGCombiner3D" parent="."]
+use_collision = true
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.262207, -3.09912)
+size = Vector3(100, 0.476, 100)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 0.903657, -0.428257, 0, 0.428257, 0.903657, -5.56521, -1.2394, -5.62683)
+size = Vector3(10, 2.47461, 10)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.907, 0, -5.04387)
+radius = 1.55839
+height = 9.60078
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5836, 0, 20.544)
+radius = 12.4407
+height = 9.60078
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5961, 0, -31.5952)
+radius = 7.2929
+height = 9.60078
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.4443, 0, -28.4757)
+radius = 1.55839
+height = 9.60078
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.4443, 0, 11.5229)
+radius = 1.55839
+height = 37.7061
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="DebugGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.7595, -9.48823, 11.5229)
+radius = 1.55839
+height = 28.8759
+
+[node name="MotorcycleStart" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.491824, 0)
+
+[node name="PlaneStart" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.491824, 17.5218)

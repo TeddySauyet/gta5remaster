@@ -5,7 +5,10 @@ var player : int = -1 : set = set_player
 
 func update() -> void:
 	if player in GameState.players:
-		text = GameState.players[player].name
+		text = ""
+		if GameState.players[player].ready_for_game_start:
+			text += "✔ "
+		text += GameState.players[player].name
 		text += ": "
 		text += str(player)
 	else:

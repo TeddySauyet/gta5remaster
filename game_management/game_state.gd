@@ -87,6 +87,15 @@ func set_players(value : Dictionary) -> void:
 	#note: do this manually cause of dictionary operations
 	#players_changed.emit()
 	
+var team_motorcycle := PLAYER_TEAM.A : set = set_team_motorcycle
+signal team_motorcycle_changed()
+func set_team_motorcycle(value : PLAYER_TEAM) -> void:
+	var emit_signal = value != team_motorcycle
+	team_motorcycle = value
+	if emit_signal:
+		team_motorcycle_changed.emit()
+
+
 func _process(_delta: float) -> void:
 	check_players_changed()
 	copy_players_to_last_frame_players()
@@ -94,7 +103,11 @@ func _process(_delta: float) -> void:
 		sync_game_state()
 
 func sync_game_state() -> void:
-	var data := {"state": state, "players": {}}
+	var data := {
+		"state": state,
+		"team_motorcycle": team_motorcycle,
+		"players": {}
+		}
 	for player in players:
 		data["players"][player] = players[player].serialize()
 	rpc_game_state.rpc(data)
@@ -102,6 +115,7 @@ func sync_game_state() -> void:
 @rpc("authority", "call_remote", "unreliable_ordered")
 func rpc_game_state(data : Dictionary) -> void:
 	state = data["state"]
+	team_motorcycle = state["team_motorcycle"]
 	var new_players := {}
 	for player in data['players']:
 		new_players[player] = CPlayerInfo.deserialize(data['players'][player])
