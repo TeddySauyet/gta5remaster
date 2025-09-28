@@ -95,7 +95,14 @@ func set_team_motorcycle(value : PLAYER_TEAM) -> void:
 	if emit_signal:
 		team_motorcycle_changed.emit()
 
-
+var team_plane := PLAYER_TEAM.B : set = set_team_plane
+signal team_plane_changed()
+func set_team_plane(value : PLAYER_TEAM) -> void:
+	var emit_signal = value != team_plane
+	team_plane = value
+	if emit_signal:
+		team_plane_changed.emit()
+		
 func _process(_delta: float) -> void:
 	check_players_changed()
 	copy_players_to_last_frame_players()
@@ -106,6 +113,7 @@ func sync_game_state() -> void:
 	var data := {
 		"state": state,
 		"team_motorcycle": team_motorcycle,
+		"team_plane": team_plane,
 		"players": {}
 		}
 	for player in players:
@@ -115,7 +123,8 @@ func sync_game_state() -> void:
 @rpc("authority", "call_remote", "unreliable_ordered")
 func rpc_game_state(data : Dictionary) -> void:
 	state = data["state"]
-	team_motorcycle = state["team_motorcycle"]
+	team_motorcycle = data["team_motorcycle"]
+	team_plane = data['team_plane']
 	var new_players := {}
 	for player in data['players']:
 		new_players[player] = CPlayerInfo.deserialize(data['players'][player])

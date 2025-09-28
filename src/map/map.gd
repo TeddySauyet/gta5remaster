@@ -6,6 +6,7 @@ class_name CMap
 
 
 func _ready() -> void:
+	EntitySpawner.spawn_parent = self
 	GameState.state_changed.connect(on_gamestate_changed)
 
 
@@ -24,8 +25,17 @@ func spawn_players() -> void:
 	for player in GameState.players:
 		if GameState.players[player].team == GameState.team_motorcycle:
 			EntitySpawner.spawn_item({
-				CEntitySpawner.Config.PATH: "res://src/plane/Plane.tscn",
-				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: peers[idx],
-				CEntitySpawner.Config.GLOBAL_TRANSFORM: spawners[idx].global_transform,
+				CEntitySpawner.Config.PATH: "res://src/motorcycle/motorcycle2.tscn",
+				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: motorcycle_start.global_transform.translated(motorcycle_start.global_transform.basis.x*motorcycle_delta*n_motorcycles),
 				CEntitySpawner.Config.SET_CAMERA3D: true
 			})
+			n_motorcycles += 1
+		if GameState.players[player].team == GameState.team_plane:
+			EntitySpawner.spawn_item({
+				CEntitySpawner.Config.PATH: "res://src/plane/plane.tscn",
+				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: plane_start.global_transform.translated(plane_start.global_transform.basis.x*plane_delta*n_planes),
+				CEntitySpawner.Config.SET_CAMERA3D: true
+			})
+			n_planes+= 1
