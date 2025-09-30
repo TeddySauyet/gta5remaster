@@ -3,6 +3,7 @@ class_name CMap
 
 @onready var motorcycle_start: Node3D = $MotorcycleStart
 @onready var plane_start: Node3D = $PlaneStart
+@onready var spectator_start: Node3D = $SpectatorStart
 
 
 func _ready() -> void:
@@ -36,6 +37,14 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.PATH: "res://src/plane/plane.tscn",
 				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
 				CEntitySpawner.Config.GLOBAL_TRANSFORM: plane_start.global_transform.translated(plane_start.global_transform.basis.x*plane_delta*n_planes),
+				CEntitySpawner.Config.SET_CAMERA3D: true
+			})
+			n_planes+= 1
+		if GameState.players[player].team == CGameState.PLAYER_TEAM.NONE:
+			EntitySpawner.spawn_item({
+				CEntitySpawner.Config.PATH: "res://src/spectator/Spectator.tscn",
+				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: spectator_start.global_transform,
 				CEntitySpawner.Config.SET_CAMERA3D: true
 			})
 			n_planes+= 1
