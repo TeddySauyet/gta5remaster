@@ -102,7 +102,17 @@ func set_team_plane(value : PLAYER_TEAM) -> void:
 	team_plane = value
 	if emit_signal:
 		team_plane_changed.emit()
-		
+
+var round_wins := {PLAYER_TEAM.A : 0, PLAYER_TEAM.B: 0} : set = set_round_wins
+signal round_wins_changed()
+func set_round_wins(value : Dictionary) -> void:
+	var emit := false
+	if (value[PLAYER_TEAM.A] != round_wins[PLAYER_TEAM.A]) or (value[PLAYER_TEAM.B] != round_wins[PLAYER_TEAM.B]):
+		emit = true
+	round_wins = value
+	if emit:
+		round_wins_changed.emit()
+
 func _process(_delta: float) -> void:
 	check_players_changed()
 	copy_players_to_last_frame_players()
@@ -114,6 +124,7 @@ func sync_game_state() -> void:
 		"state": state,
 		"team_motorcycle": team_motorcycle,
 		"team_plane": team_plane,
+		"round_wins": round_wins,
 		"players": {}
 		}
 	for player in players:
@@ -125,6 +136,7 @@ func rpc_game_state(data : Dictionary) -> void:
 	state = data["state"]
 	team_motorcycle = data["team_motorcycle"]
 	team_plane = data['team_plane']
+	round_wins = data['round_wins']
 	var new_players := {}
 	for player in data['players']:
 		new_players[player] = CPlayerInfo.deserialize(data['players'][player])

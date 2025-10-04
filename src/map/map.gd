@@ -5,6 +5,7 @@ class_name CMap
 @onready var plane_start: Node3D = $PlaneStart
 @onready var spectator_start: Node3D = $SpectatorStart
 
+signal package_delivered(player_id : int)
 
 func _ready() -> void:
 	EntitySpawner.spawn_parent = self
@@ -48,3 +49,7 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.SET_CAMERA3D: true
 			})
 			n_planes+= 1
+
+
+func make_everyone_spectator() -> void:
+	pass
