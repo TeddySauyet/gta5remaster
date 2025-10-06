@@ -30,7 +30,8 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.PATH: "res://src/motorcycle/motorcycle2.tscn",
 				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
 				CEntitySpawner.Config.GLOBAL_TRANSFORM: motorcycle_start.global_transform.translated(motorcycle_start.global_transform.basis.x*motorcycle_delta*n_motorcycles),
-				CEntitySpawner.Config.SET_CAMERA3D: true
+				CEntitySpawner.Config.SET_CAMERA3D: true,
+				CEntitySpawner.Config.CALLBACK: spawn_callback,
 			})
 			n_motorcycles += 1
 		if GameState.players[player].team == GameState.team_plane:
@@ -38,7 +39,8 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.PATH: "res://src/plane/plane.tscn",
 				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
 				CEntitySpawner.Config.GLOBAL_TRANSFORM: plane_start.global_transform.translated(plane_start.global_transform.basis.x*plane_delta*n_planes),
-				CEntitySpawner.Config.SET_CAMERA3D: true
+				CEntitySpawner.Config.SET_CAMERA3D: true,
+				CEntitySpawner.Config.CALLBACK: spawn_callback,
 			})
 			n_planes+= 1
 		if GameState.players[player].team == CGameState.PLAYER_TEAM.NONE:
@@ -46,9 +48,13 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.PATH: "res://src/spectator/Spectator.tscn",
 				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
 				CEntitySpawner.Config.GLOBAL_TRANSFORM: spectator_start.global_transform,
-				CEntitySpawner.Config.SET_CAMERA3D: true
+				CEntitySpawner.Config.SET_CAMERA3D: true,
+				CEntitySpawner.Config.CALLBACK: spawn_callback,
 			})
 			n_planes+= 1
+
+func spawn_callback(node : Node, config : Dictionary) -> void:
+	print_debug("Call back with id ", config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY], " on player ", multiplayer.get_unique_id(), " scene is ", config[CEntitySpawner.Config.PATH])
 
 
 func make_everyone_spectator() -> void:
