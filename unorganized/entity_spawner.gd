@@ -10,7 +10,8 @@ enum Config
 	GLOBAL_TRANSFORM,
 	MULTIPLAYER_AUTHORITY,
 	SET_CAMERA3D,
-	CALLBACK,
+	CALLBACK_NAME,
+	CALLBACK_PATH,
 }
 
 static var config_types : Dictionary = {
@@ -19,7 +20,8 @@ static var config_types : Dictionary = {
 	Config.GLOBAL_TRANSFORM: Transform3D(),
 	Config.MULTIPLAYER_AUTHORITY: int(1),
 	Config.SET_CAMERA3D: bool(false),
-	Config.CALLBACK: Callable(self, "dummy_callback")
+	Config.CALLBACK_NAME: String(""),
+	Config.CALLBACK_PATH: NodePath(),
 } 
 
 static func dummy_callback(_node: Node, _config : Dictionary) -> void:
@@ -60,7 +62,15 @@ func _client_spawn_item(config : Dictionary) -> void:
 				item.find_child("Camera3D").current = true
 			else:
 				item.find_child("Camera3D").current = false
-	if Config.CALLBACK in config:
-		config[Config.CALLBACK].call(item, config)
+	if Config.CALLBACK_NAME in config and Config.CALLBACK_PATH in config:
+		var node : Node = get_node(config[Config.CALLBACK_PATH])
+		if node:
+			if node.has_method(config[Config.CALLBACK_NAME]):
+				var callable : Callable = Callable(node, config[Config.CALLBACK_NAME])
+				callable.call(item, config)
+			else:
+				print_debug("Node exists but does not have callback method, config = ", config)
+		else:
+			print_debug("Callback node not found, config: ", config)
 				
 	

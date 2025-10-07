@@ -31,7 +31,8 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
 				CEntitySpawner.Config.GLOBAL_TRANSFORM: motorcycle_start.global_transform.translated(motorcycle_start.global_transform.basis.x*motorcycle_delta*n_motorcycles),
 				CEntitySpawner.Config.SET_CAMERA3D: true,
-				CEntitySpawner.Config.CALLBACK: spawn_callback,
+				CEntitySpawner.Config.CALLBACK_NAME: "spawn_callback",
+				CEntitySpawner.Config.CALLBACK_PATH: get_path(),
 			})
 			n_motorcycles += 1
 		if GameState.players[player].team == GameState.team_plane:
@@ -40,7 +41,8 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
 				CEntitySpawner.Config.GLOBAL_TRANSFORM: plane_start.global_transform.translated(plane_start.global_transform.basis.x*plane_delta*n_planes),
 				CEntitySpawner.Config.SET_CAMERA3D: true,
-				CEntitySpawner.Config.CALLBACK: spawn_callback,
+				CEntitySpawner.Config.CALLBACK_NAME: "spawn_callback",
+				CEntitySpawner.Config.CALLBACK_PATH: get_path(),
 			})
 			n_planes+= 1
 		if GameState.players[player].team == CGameState.PLAYER_TEAM.NONE:
@@ -49,7 +51,8 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: player,
 				CEntitySpawner.Config.GLOBAL_TRANSFORM: spectator_start.global_transform,
 				CEntitySpawner.Config.SET_CAMERA3D: true,
-				CEntitySpawner.Config.CALLBACK: spawn_callback,
+				CEntitySpawner.Config.CALLBACK_NAME: "spawn_callback",
+				CEntitySpawner.Config.CALLBACK_PATH: get_path(),
 			})
 			n_planes+= 1
 
