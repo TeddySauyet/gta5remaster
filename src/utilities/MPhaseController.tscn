@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4jwyb2kb8osw"]
+
+[ext_resource type="Script" path="res://src/utilities/MPhaseController.gd" id="1_blucb"]
+
+[node name="MPhaseController" type="Node"]
+script = ExtResource("1_blucb")
