@@ -1,6 +1,43 @@
-[gd_scene load_steps=2 format=3 uid="uid://d4jwyb2kb8osw"]
+[gd_scene load_steps=8 format=3 uid="uid://d4jwyb2kb8osw"]
 
 [ext_resource type="Script" path="res://src/utilities/MPhaseController.gd" id="1_blucb"]
+[ext_resource type="Script" path="res://src/utilities/RMPhase.gd" id="2_pns5n"]
+
+[sub_resource type="Resource" id="Resource_w3nl3"]
+script = ExtResource("2_pns5n")
+name = &"Lobby"
+transition_method = 1
+transition_condition = 0
+transition_target = &"MapLoad"
+
+[sub_resource type="Resource" id="Resource_lge4s"]
+script = ExtResource("2_pns5n")
+name = &"MapLoad"
+transition_method = 1
+transition_condition = 0
+transition_target = &"Playing"
+
+[sub_resource type="Resource" id="Resource_urija"]
+script = ExtResource("2_pns5n")
+name = &"Playing"
+transition_method = 0
+transition_condition = 1
+transition_target = &"RoundEnd"
+
+[sub_resource type="Resource" id="Resource_v30tv"]
+script = ExtResource("2_pns5n")
+name = &"RoundEnd"
+transition_method = 0
+transition_condition = 1
+transition_target = &"NONE"
+
+[sub_resource type="Resource" id="Resource_m0ltm"]
+script = ExtResource("2_pns5n")
+name = &"GameEnd"
+transition_method = 1
+transition_condition = 0
+transition_target = &"Lobby"
 
 [node name="MPhaseController" type="Node"]
 script = ExtResource("1_blucb")
+phases = Array[ExtResource("2_pns5n")]([SubResource("Resource_w3nl3"), SubResource("Resource_lge4s"), SubResource("Resource_urija"), SubResource("Resource_v30tv"), SubResource("Resource_m0ltm")])

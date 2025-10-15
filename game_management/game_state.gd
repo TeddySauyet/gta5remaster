@@ -6,16 +6,6 @@ class_name CGameState
 ## To think about: should I use a synchronizer to auto synchronize this stuff?
 ## Man to detect changes in dictionaries we gotta monitor it in process, which kinda sucks but whadda ya gonna do.
 
-enum GAME_STATE
-{
-	NONE,
-	LOBBY,
-	MAP_LOAD,
-	PLAYING,
-	ROUND_END,
-	END_SCREEN,
-}
-
 enum PLAYER_STATE
 {
 	NONE,
@@ -35,45 +25,27 @@ class CPlayerInfo:
 	var state := PLAYER_STATE.NONE
 	var team := PLAYER_TEAM.NONE
 	var name : String = "CPlayerInfo default name"
-	var ready_for_game_start : bool = false
-	var ready_for_map_start : bool = false
 	func equals(other : CPlayerInfo) -> bool:
 		return state == other.state and \
 			team == other.team and \
-			name == other.name and \
-			ready_for_game_start == other.ready_for_game_start and \
-			ready_for_map_start == other.ready_for_map_start
+			name == other.name
 	func copy() -> CPlayerInfo:
 		var result := CPlayerInfo.new()
 		result.state = state
 		result.team = team
 		result.name = name
-		result.ready_for_game_start = ready_for_game_start
-		result.ready_for_map_start = ready_for_map_start
 		return result
 	func serialize() -> Dictionary:
 		return {'state': state,
 			'team': team,
 			'name': name,
-			'ready_for_game_start': ready_for_game_start,
-			'ready_for_map_start': ready_for_map_start,
 			}
 	static func deserialize(data : Dictionary) -> CPlayerInfo:
 		var result := CPlayerInfo.new()
 		result.state = data['state']
 		result.team = data['team']
 		result.name = data['name']
-		result.ready_for_game_start = data['ready_for_game_start']
-		result.ready_for_map_start = data['ready_for_map_start']
 		return result
-
-var state := GAME_STATE.NONE : set = set_state
-signal state_changed()
-func set_state(value : GAME_STATE) -> void:
-	var flag : bool = value != state
-	state = value
-	if flag:
-		state_changed.emit()
 
 ## int : CPlayerInfo
 var players : Dictionary = {} : set = set_players
@@ -121,7 +93,6 @@ func _process(_delta: float) -> void:
 
 func sync_game_state() -> void:
 	var data := {
-		"state": state,
 		"team_motorcycle": team_motorcycle,
 		"team_plane": team_plane,
 		"round_wins": round_wins,
@@ -133,7 +104,6 @@ func sync_game_state() -> void:
 
 @rpc("authority", "call_remote", "unreliable_ordered")
 func rpc_game_state(data : Dictionary) -> void:
-	state = data["state"]
 	team_motorcycle = data["team_motorcycle"]
 	team_plane = data['team_plane']
 	round_wins = data['round_wins']

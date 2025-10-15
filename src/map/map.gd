@@ -13,8 +13,8 @@ func _ready() -> void:
 
 
 func on_gamestate_changed() -> void:
-	match GameState.state:
-		CGameState.GAME_STATE.PLAYING:
+	match MPhaseController.get_current_phase().name:
+		"Playing":
 			if multiplayer.is_server():
 				spawn_players()
 

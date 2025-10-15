@@ -65,10 +65,10 @@ func update_buttons_active() -> void:
 	#Weird stuff with this node being freed during this transition
 	#multiplayer property is null when this gets called
 	#This seems to fix it - this node shouldn't exist during map load anyway
-	if GameState.state == CGameState.GAME_STATE.MAP_LOAD:
+	if MPhaseController.get_phase().name == "MapLoad":
 		return
 	var id := multiplayer.get_unique_id()
 	button_spectate.disabled = GameState.players[id].team == CGameState.PLAYER_TEAM.NONE
 	button_join_team_a.disabled = GameState.players[id].team == CGameState.PLAYER_TEAM.A
 	button_join_team_b.disabled = GameState.players[id].team == CGameState.PLAYER_TEAM.B
-	button_ready_up.disabled = GameState.players[id].ready_for_game_start
+	button_ready_up.disabled = MPhaseController.player_to_ready[id]

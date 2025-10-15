@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 EntitySpawner="*res://unorganized/EntitySpawner.tscn"
-UiRoot="*res://menus/UIRoot.tscn"
 GameState="*res://game_management/GameState.tscn"
+MPhaseController="*res://src/utilities/MPhaseController.tscn"
 
 [input]
 

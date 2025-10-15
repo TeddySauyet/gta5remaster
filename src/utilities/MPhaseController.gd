@@ -30,6 +30,10 @@ var player_to_ready : Dictionary = {}
 ## StringName: RMPhase
 var name_to_phase : Dictionary = {}
 
+func get_current_phase() -> RMPhase:
+	var id := multiplayer.get_unique_id()
+	return player_to_phase[id]
+
 func _ready() -> void:
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -71,11 +75,15 @@ func _on_connected_to_server() -> void:
 	
 func _on_peer_connected(id : int) -> void:
 	if multiplayer.is_server():
-		pass
+		client_receive_data.rpc_id(id, player_to_phase, player_to_ready)
 	else:
 		pass
-		
 
+@rpc("authority", "reliable", "call_local")
+func client_receive_data(pp : Dictionary, pr: Dictionary) -> void:
+	player_to_phase = pp
+	player_to_ready = pr
+	
 func set_phase(phase : Variant) -> bool:
 	var _phase := find_phase(phase)
 	if multiplayer.is_server():
@@ -104,10 +112,9 @@ func set_phase(phase : Variant) -> bool:
 		return false
 
 func find_phase(input : Variant) -> RMPhase:
-	if input is String:
-		for phase in phases:
-			if phase.name == input:
-				return phase
+	if input is String or input is StringName:
+		if StringName(input) in name_to_phase:
+			return name_to_phase[StringName(input)]
 		return null
 	elif input is RMPhase:
 		return input
