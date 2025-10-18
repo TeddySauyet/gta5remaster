@@ -30,6 +30,7 @@ var player_to_ready : Dictionary = {}
 ## StringName: RMPhase
 var name_to_phase : Dictionary = {}
 
+var _initialized : bool = false
 func get_current_phase() -> RMPhase:
 	var id := multiplayer.get_unique_id()
 	return player_to_phase[id]
@@ -39,8 +40,17 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	set_phases(phases)
 
+func server_initialize(phase : Variant, ready : bool = false) -> bool:
+	if not multiplayer.is_server():
+		return false
+	var _phase : RMPhase = find_phase(phase)
+	player_to_phase[1] = _phase
+	player_to_ready[1] = ready
+	_initialized = true
+	return true
+
 func _process(delta: float) -> void:
-	if multiplayer.is_server():
+	if multiplayer.is_server() and _initialized:
 		var current_phase : RMPhase = player_to_phase[1]
 		if current_phase.transition_method == RMPhase.TRANSITION_METHOD.AUTO:
 			match current_phase.transition_condition:
@@ -83,6 +93,7 @@ func _on_peer_connected(id : int) -> void:
 func client_receive_data(pp : Dictionary, pr: Dictionary) -> void:
 	player_to_phase = pp
 	player_to_ready = pr
+	_initialized = true
 	
 func set_phase(phase : Variant) -> bool:
 	var _phase := find_phase(phase)

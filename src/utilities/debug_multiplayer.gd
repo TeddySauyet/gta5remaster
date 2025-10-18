@@ -18,6 +18,7 @@ func _attempt_host_server() -> bool:
 	if error:
 		return false
 	multiplayer.multiplayer_peer = peer
+	MPhaseController.server_initialize("Lobby", false)
 	print_debug('Hosted server')
 	return true
 
