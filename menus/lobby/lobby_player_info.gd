@@ -46,15 +46,16 @@ func on_join_team_b_pressed() -> void:
 	set_new_team.rpc_id(1, CGameState.PLAYER_TEAM.B)
 
 func on_ready_up_pressed() -> void:
-	ready_up.rpc_id(1)
-	
-@rpc("any_peer", "reliable", "call_local")
-func ready_up() -> void:
-	var id := multiplayer.get_remote_sender_id()
-	#print_debug("Ready up pressed by ", id, " on ", multiplayer.get_unique_id())
-	GameState.players[id].ready_for_game_start = true
-	#for i in GameState.players:
-		#print_debug(i, ": ", GameState.players[i].ready_for_game_start)
+	MPhaseController.set_ready(true)
+	#ready_up.rpc_id(1)
+	#
+#@rpc("any_peer", "reliable", "call_local")
+#func ready_up() -> void:
+	#var id := multiplayer.get_remote_sender_id()
+	##print_debug("Ready up pressed by ", id, " on ", multiplayer.get_unique_id())
+	#GameState.players[id].ready_for_game_start = true
+	##for i in GameState.players:
+		##print_debug(i, ": ", GameState.players[i].ready_for_game_start)
 	
 @rpc("any_peer", "reliable", "call_local")
 func set_new_team(team : CGameState.PLAYER_TEAM) -> void:
@@ -65,7 +66,7 @@ func update_buttons_active() -> void:
 	#Weird stuff with this node being freed during this transition
 	#multiplayer property is null when this gets called
 	#This seems to fix it - this node shouldn't exist during map load anyway
-	if MPhaseController.get_phase().name == "MapLoad":
+	if MPhaseController.get_current_phase().name == "MapLoad":
 		return
 	var id := multiplayer.get_unique_id()
 	button_spectate.disabled = GameState.players[id].team == CGameState.PLAYER_TEAM.NONE

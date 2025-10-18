@@ -6,15 +6,31 @@ var map : CMap = null
 
 
 func _ready() -> void:
+	MPhaseController.new_local_phase.connect(_on_new_phase)
 	if multiplayer.is_server():
 		multiplayer.peer_connected.connect(on_player_connected)
 		on_player_connected(1)
 		MPhaseController.set_phase("Lobby")
+		_on_new_phase(MPhaseController.get_current_phase())
 
 ## lots more work to do here
 func on_player_connected(id : int) -> void:
 	assert(not id in GameState.players)
 	GameState.players[id] = CGameState.CPlayerInfo.new()
+
+func _on_new_phase(phase : RMPhase) -> void:
+	match phase.name:
+		RMPhase.LOBBY:
+			open_lobby_menu()
+		RMPhase.MapLoad:
+			reset()
+			open_game_map()
+			MPhaseController.set_ready(true)
+		RMPhase.Playing:
+			print_debug("Playing on ", multiplayer.get_unique_id())
+		RMPhase.RoundEnd:
+			print_debug("Round end on  ", multiplayer.get_unique_id())
+			
 
 func on_game_state_changed() -> void:
 	pass # does this even ever get called?

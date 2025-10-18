@@ -5,6 +5,8 @@ class_name CMPhaseController
 ## API:
 ##  set_phase(variant[String, RMPhase]) -> bool
 ##  set_ready(bool) -> void
+##  get_current_phase() -> RMPhase
+##  get_ready() -> vbool
 
 
 @export var phases : Array[RMPhase] : set = set_phases
@@ -35,6 +37,9 @@ func get_current_phase() -> RMPhase:
 	var id := multiplayer.get_unique_id()
 	return player_to_phase[id]
 
+func get_ready() -> bool:
+	return player_to_ready[multiplayer.get_unique_id()]
+
 func _ready() -> void:
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -59,7 +64,7 @@ func _process(delta: float) -> void:
 						if current_phase.transition_target == "NONE":
 							print_debug("Current phase '", current_phase.name,"' does not have a vaid transition target")
 						else:
-							set_phase(current_phase)
+							server_set_phase_impl(find_phase(current_phase.transition_target))
 				_:
 					pass
 					#no other condition gets triggered like that
@@ -76,7 +81,7 @@ func set_phases(value : Array[RMPhase]) -> void:
 	name_to_phase = {}
 	for phase in phases:
 		if phase is RMPhase:
-			name_to_phase[phase.name] = phases
+			name_to_phase[phase.name] = phase
 		else:
 			print_debug("Wrong type in phases: ", phase)
 
@@ -125,6 +130,7 @@ func set_phase(phase : Variant) -> bool:
 func find_phase(input : Variant) -> RMPhase:
 	if input is String or input is StringName:
 		if StringName(input) in name_to_phase:
+			#var result : RMPhase = name_to_phase[StringName(input)]
 			return name_to_phase[StringName(input)]
 		return null
 	elif input is RMPhase:

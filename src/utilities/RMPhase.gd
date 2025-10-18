@@ -19,3 +19,9 @@ enum TRANSITION_CONDITION
 	CONSENSUS_OR_AUTHORITY,
 	CONSENSUS_AND_AUTHORITY,
 }
+
+const LOBBY : StringName = "Lobby"
+const MapLoad : StringName = "MapLoad"
+const Playing : StringName = "Playing"
+const RoundEnd : StringName = "RoundEnd"
+const GameEnd : StringName = "GameEnd"

@@ -6,7 +6,7 @@ var player : int = -1 : set = set_player
 func update() -> void:
 	if player in GameState.players:
 		text = ""
-		if GameState.players[player].ready_for_game_start:
+		if MPhaseController.get_ready():
 			text += "✔ "
 		text += GameState.players[player].name
 		text += ": "

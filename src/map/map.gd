@@ -9,11 +9,11 @@ signal package_delivered(player_id : int)
 
 func _ready() -> void:
 	EntitySpawner.spawn_parent = self
-	GameState.state_changed.connect(on_gamestate_changed)
+	MPhaseController.new_local_phase.connect(on_phase_changed)
 
 
-func on_gamestate_changed() -> void:
-	match MPhaseController.get_current_phase().name:
+func on_phase_changed(phase : RMPhase) -> void:
+	match phase.name:
 		"Playing":
 			if multiplayer.is_server():
 				spawn_players()
