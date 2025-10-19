@@ -12,7 +12,7 @@ func _ready() -> void:
 		on_player_connected(1)
 		MPhaseController.set_phase("Lobby")
 		_on_new_phase(MPhaseController.get_current_phase())
-	
+
 
 ## lots more work to do here
 func on_player_connected(id : int) -> void:
@@ -33,22 +33,7 @@ func _on_new_phase(phase : RMPhase) -> void:
 			print_debug("Round end on  ", multiplayer.get_unique_id())
 			
 
-func on_game_state_changed() -> void:
-	pass # does this even ever get called?
-	#match GameState.state:
-		#CGameState.GAME_STATE.LOBBY:
-			#open_lobby_menu()
-		#CGameState.GAME_STATE.MAP_LOAD:
-			#reset()
-			#open_game_map()
-			#set_map_ready.rpc_id(1)
-		#CGameState.GAME_STATE.PLAYING:
-			#print_debug("Playing on ", multiplayer.get_unique_id())
-		#CGameState.GAME_STATE.ROUND_END:
-			#pass
-
 func open_lobby_menu() -> void:
-	#print_debug(multiplayer.get_unique_id(), " opened lobby menu")
 	reset()
 	lobby_menu = preload("res://menus/lobby/LobbyMenu.tscn").instantiate()
 	add_child(lobby_menu)

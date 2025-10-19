@@ -8,9 +8,8 @@ var game_instance : CGameInstance = null
 func _ready() -> void:
 	main_menu = preload("res://menus/main/MainMenu.tscn").instantiate()
 	main_menu.debug_start.connect(debug_start)
-	multiplayer.connected_to_server.connect(start_game)
 	add_child(main_menu)
-	
+
 func debug_start() -> void:
 	$DebugMultiplayer.debug_start_network()
 	main_menu.queue_free()
@@ -19,4 +18,4 @@ func debug_start() -> void:
 
 func start_game() -> void:
 	game_instance = preload("res://game_management/GameInstance.tscn").instantiate()
-	add_child(game_instance)
+	add_child(game_instance, true)

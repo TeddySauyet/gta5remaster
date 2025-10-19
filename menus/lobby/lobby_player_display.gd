@@ -16,7 +16,16 @@ func update() -> void:
 
 func _ready() -> void:
 	GameState.players_changed.connect(update)
+	MPhaseController.new_local_ready.connect(_on_new_local_ready)
+	MPhaseController.new_remote_ready.connect(_on_new_remote_ready)
 	
+	
+func _on_new_local_ready(value : bool) -> void:
+	update()
+
+func _on_new_remote_ready(id: int, value: bool) -> void:
+	update()
+
 func set_player(value : int) -> void:
 	player = value
 	update()

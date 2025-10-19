@@ -24,7 +24,7 @@ enum PLAYER_TEAM
 class CPlayerInfo:
 	var state := PLAYER_STATE.NONE
 	var team := PLAYER_TEAM.NONE
-	var name : String = "CPlayerInfo default name"
+	var name : String = "CPlayerInfo"
 	func equals(other : CPlayerInfo) -> bool:
 		return state == other.state and \
 			team == other.team and \

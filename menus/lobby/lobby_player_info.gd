@@ -47,15 +47,6 @@ func on_join_team_b_pressed() -> void:
 
 func on_ready_up_pressed() -> void:
 	MPhaseController.set_ready(true)
-	#ready_up.rpc_id(1)
-	#
-#@rpc("any_peer", "reliable", "call_local")
-#func ready_up() -> void:
-	#var id := multiplayer.get_remote_sender_id()
-	##print_debug("Ready up pressed by ", id, " on ", multiplayer.get_unique_id())
-	#GameState.players[id].ready_for_game_start = true
-	##for i in GameState.players:
-		##print_debug(i, ": ", GameState.players[i].ready_for_game_start)
 	
 @rpc("any_peer", "reliable", "call_local")
 func set_new_team(team : CGameState.PLAYER_TEAM) -> void:
@@ -72,4 +63,4 @@ func update_buttons_active() -> void:
 	button_spectate.disabled = GameState.players[id].team == CGameState.PLAYER_TEAM.NONE
 	button_join_team_a.disabled = GameState.players[id].team == CGameState.PLAYER_TEAM.A
 	button_join_team_b.disabled = GameState.players[id].team == CGameState.PLAYER_TEAM.B
-	button_ready_up.disabled = MPhaseController.player_to_ready[id]
+	#button_ready_up.disabled = MPhaseController.player_to_ready[id]
