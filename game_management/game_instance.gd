@@ -12,6 +12,7 @@ func _ready() -> void:
 		on_player_connected(1)
 		MPhaseController.set_phase("Lobby")
 		_on_new_phase(MPhaseController.get_current_phase())
+	
 
 ## lots more work to do here
 func on_player_connected(id : int) -> void:

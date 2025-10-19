@@ -8,6 +8,7 @@ var game_instance : CGameInstance = null
 func _ready() -> void:
 	main_menu = preload("res://menus/main/MainMenu.tscn").instantiate()
 	main_menu.debug_start.connect(debug_start)
+	multiplayer.connected_to_server.connect(start_game)
 	add_child(main_menu)
 	
 func debug_start() -> void:

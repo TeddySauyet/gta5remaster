@@ -87,17 +87,61 @@ func set_phases(value : Array[RMPhase]) -> void:
 
 func _on_connected_to_server() -> void:
 	pass
-	
+
 func _on_peer_connected(id : int) -> void:
 	if multiplayer.is_server():
-		client_receive_data.rpc_id(id, player_to_phase, player_to_ready)
+		player_to_phase[id] = get_current_phase()
+		player_to_ready[id] = false
+		var pp_serial = {}
+		for i in player_to_phase:
+			pp_serial[i] = player_to_phase[i].name
+		client_receive_data.rpc(pp_serial, player_to_ready)
 	else:
 		pass
 
 @rpc("authority", "reliable", "call_local")
 func client_receive_data(pp : Dictionary, pr: Dictionary) -> void:
-	player_to_phase = pp
+	var emit_local_phase := false
+	var emit_remote_phases : Array[int] = []
+	var emit_local_ready := false
+	var emit_remote_readys : Array[int] = []
+	
+	for id in pp:
+		if not id in player_to_phase:
+			if id == multiplayer.get_unique_id():
+				emit_local_phase = true
+			else:
+				emit_remote_phases.push_back(id)
+		elif pp[id] != player_to_phase[id].name:
+			if id == multiplayer.get_unique_id():
+				emit_local_phase = true
+			else:
+				emit_remote_phases.push_back(id)
+	for id in pr:
+		if not id in player_to_ready:
+			if id == multiplayer.get_unique_id():
+				emit_local_ready = true
+			else:
+				emit_remote_readys.push_back(id)
+		elif pr[id] != player_to_ready[id]:
+			if id == multiplayer.get_unique_id():
+				emit_local_ready = true
+			else:
+				emit_remote_readys.push_back(id)
+	
+	for id in pp:
+		player_to_phase[id] = find_phase(pp[id])
 	player_to_ready = pr
+	
+	if emit_local_phase:
+		new_local_phase.emit(get_current_phase())
+	if emit_local_ready:
+		new_local_ready.emit(get_ready())
+	for id in emit_remote_phases:
+		new_remote_phase.emit(id, player_to_phase[id])
+	for id in emit_remote_readys:
+		new_remote_ready.emit(id, player_to_ready[id])
+	
 	_initialized = true
 	
 func set_phase(phase : Variant) -> bool:
@@ -166,7 +210,7 @@ func client_set_player_phase(player: int, index : int) -> void:
 
 func set_ready(value : bool) -> void:
 	var id := multiplayer.get_unique_id()
-	server_set_client_ready.rpc(value)
+	server_set_client_ready.rpc_id(1, value)
 	
 @rpc("any_peer", "reliable", "call_local")
 func server_set_client_ready(value : bool) -> void:
