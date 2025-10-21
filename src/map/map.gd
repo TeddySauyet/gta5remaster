@@ -5,12 +5,36 @@ class_name CMap
 @onready var plane_start: Node3D = $PlaneStart
 @onready var spectator_start: Node3D = $SpectatorStart
 
-signal package_delivered(player_id : int)
+signal round_won(team : CGameState.PLAYER_TEAM)
 
 func _ready() -> void:
 	EntitySpawner.spawn_parent = self
 	MPhaseController.new_local_phase.connect(on_phase_changed)
 
+func _process(delta: float) -> void:
+	if multiplayer.is_server():
+		match MPhaseController.get_current_phase().name:
+			RMPhase.Playing:
+				var motorcycle_alive := false
+				var plane_alive := false
+				for player in GameState.players:
+					match GameState.players[player].state:
+						GameState.PLAYER_STATE.MOTORCYCLE:
+							motorcycle_alive = true
+						GameState.PLAYER_STATE.PLANE:
+							plane_alive = true
+				if motorcycle_alive and plane_alive:
+					pass
+				elif not motorcycle_alive and not plane_alive:
+					round_won.emit(CGameState.PLAYER_TEAM.NONE)
+				elif motorcycle_alive:
+					round_won.emit(GameState.team_motorcycle)
+				elif plane_alive:
+					round_won.emit(GameState.team_plane)
+				else:
+					print_debug("Unreachable")
+					
+					
 
 func on_phase_changed(phase : RMPhase) -> void:
 	match phase.name:
@@ -58,7 +82,3 @@ func spawn_players() -> void:
 
 func spawn_callback(node : Node, config : Dictionary) -> void:
 	print_debug("Call back with id ", config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY], " on player ", multiplayer.get_unique_id(), " scene is ", config[CEntitySpawner.Config.PATH])
-
-
-func make_everyone_spectator() -> void:
-	pass
