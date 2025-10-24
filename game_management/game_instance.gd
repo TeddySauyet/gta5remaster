@@ -47,7 +47,6 @@ func reset() -> void:
 
 func open_game_map() -> void:
 	map = preload("res://src/map/Map.tscn").instantiate()
-	map.package_delivered.connect(on_package_delivered)
 	add_child(map)
 	
 
@@ -55,7 +54,3 @@ func open_game_map() -> void:
 func set_map_ready() -> void:
 	var id := multiplayer.get_remote_sender_id()
 	GameState.players[id].ready_for_map_start = true
-
-
-func on_package_delivered(player_id : int) -> void:
-	pass

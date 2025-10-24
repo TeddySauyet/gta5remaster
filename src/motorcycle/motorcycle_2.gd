@@ -79,3 +79,21 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	#print_debug(velocity.length(), '|', gear_disadvantage)
+
+func receive_damage(dmg : DamageInstance) -> void:
+	if multiplayer.is_server():
+		client_change_to_spectator.rpc()
+		client_change_to_spectator() #to ensure proper order on server
+		EntitySpawner.spawn_item(
+			{
+				CEntitySpawner.Config.PATH: "res://src/spectator/Spectator.tscn",
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: global_transform,
+				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: get_multiplayer_authority(),
+				CEntitySpawner.Config.SET_CAMERA3D: true,
+			}
+		)
+	
+@rpc("call_remote", "authority", "reliable")	
+func client_change_to_spectator() -> void:
+	queue_free()
+	

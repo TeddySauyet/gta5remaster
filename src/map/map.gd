@@ -81,4 +81,5 @@ func spawn_players() -> void:
 			n_planes+= 1
 
 func spawn_callback(node : Node, config : Dictionary) -> void:
-	print_debug("Call back with id ", config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY], " on player ", multiplayer.get_unique_id(), " scene is ", config[CEntitySpawner.Config.PATH])
+	#print_debug("Call back with id ", config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY], " on player ", multiplayer.get_unique_id(), " scene is ", config[CEntitySpawner.Config.PATH])
+	pass

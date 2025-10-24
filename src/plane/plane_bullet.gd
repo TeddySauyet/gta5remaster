@@ -12,7 +12,6 @@ func _process(delta: float) -> void:
 	pass
 
 func on_body_entered(body : Node3D) -> void:
-	print_debug("Body: ", body)
 	if body.has_method("receive_damage"):
 		body.receive_damage(make_damage_instance())
 		
