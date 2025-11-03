@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://djl328pev2pdu"]
+
+[ext_resource type="Script" path="res://menus/scoreboard/scoreboard.gd" id="1_i72dw"]
+[ext_resource type="Script" path="res://menus/lobby/lobby_team_display.gd" id="1_teuea"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+offset_right = 223.0
+offset_bottom = 35.0
+alignment = 1
+script = ExtResource("1_i72dw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spectators"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+script = ExtResource("1_teuea")
+
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Team A"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+script = ExtResource("1_teuea")
+team = 1
+
+[node name="VSeparator2" type="VSeparator" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer3"]
+layout_mode = 2
+text = "Team B"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer3"]
+layout_mode = 2
+
+[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="VBoxContainer3"]
+layout_mode = 2
+script = ExtResource("1_teuea")
+team = 2

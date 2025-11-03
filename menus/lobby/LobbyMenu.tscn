@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bkwrtqk53ob5y"]
 
 [ext_resource type="Script" path="res://menus/lobby/lobby_menu.gd" id="1_e2ljq"]
-[ext_resource type="Script" path="res://menus/lobby/lobby_team_display.gd" id="2_kcyvc"]
+[ext_resource type="PackedScene" uid="uid://djl328pev2pdu" path="res://menus/scoreboard/Scoreboard.tscn" id="2_3wt1g"]
 [ext_resource type="PackedScene" uid="uid://cklgulxwqn7yo" path="res://menus/lobby/LobbyPlayerInfo.tscn" id="3_stpsw"]
 
 [node name="LobbyMenu" type="Control"]
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e2ljq")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="ScoreBoard" parent="." instance=ExtResource("2_3wt1g")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -26,57 +26,6 @@ offset_right = 389.5
 offset_bottom = 222.5
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Unassigned"
-
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("2_kcyvc")
-
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Team A"
-
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-script = ExtResource("2_kcyvc")
-team = 1
-
-[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Team B"
-
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-
-[node name="CLobbyTeamDisplay" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-script = ExtResource("2_kcyvc")
-team = 2
 
 [node name="LobbyPlayerInfo" parent="." instance=ExtResource("3_stpsw")]
 layout_mode = 0
