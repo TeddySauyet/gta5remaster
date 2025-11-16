@@ -81,9 +81,8 @@ func _physics_process(delta: float) -> void:
 	#print_debug(velocity.length(), '|', gear_disadvantage)
 
 func receive_damage(dmg : DamageInstance) -> void:
-	if multiplayer.is_server():
+	if get_multiplayer_authority() == multiplayer.get_unique_id():
 		client_change_to_spectator.rpc()
-		client_change_to_spectator() #to ensure proper order on server
 		EntitySpawner.spawn_item(
 			{
 				CEntitySpawner.Config.PATH: "res://src/spectator/Spectator.tscn",
@@ -92,8 +91,10 @@ func receive_damage(dmg : DamageInstance) -> void:
 				CEntitySpawner.Config.SET_CAMERA3D: true,
 			}
 		)
-	
-@rpc("call_remote", "authority", "reliable")	
+
+@rpc("call_local", "authority", "reliable")	
 func client_change_to_spectator() -> void:
+	print_debug("Changing to spectator on ", multiplayer.get_unique_id())
 	queue_free()
-	
+	if multiplayer.is_server():
+		GameState.players[get_multiplayer_authority()].state = CGameState.PLAYER_STATE.SPECTATING

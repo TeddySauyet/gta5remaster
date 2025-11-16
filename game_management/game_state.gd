@@ -21,6 +21,8 @@ enum PLAYER_TEAM
 	B,
 }
 
+static var  N_ROUNDS_TO_WIN := 3
+
 class CPlayerInfo:
 	var state := PLAYER_STATE.NONE
 	var team := PLAYER_TEAM.NONE

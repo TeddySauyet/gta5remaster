@@ -59,6 +59,7 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.CALLBACK_PATH: get_path(),
 			})
 			n_motorcycles += 1
+			GameState.players[player].state = CGameState.PLAYER_STATE.MOTORCYCLE
 		if GameState.players[player].team == GameState.team_plane:
 			EntitySpawner.spawn_item({
 				CEntitySpawner.Config.PATH: "res://src/plane/plane.tscn",
@@ -69,6 +70,7 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.CALLBACK_PATH: get_path(),
 			})
 			n_planes+= 1
+			GameState.players[player].state = CGameState.PLAYER_STATE.PLANE
 		if GameState.players[player].team == CGameState.PLAYER_TEAM.NONE:
 			EntitySpawner.spawn_item({
 				CEntitySpawner.Config.PATH: "res://src/spectator/Spectator.tscn",
@@ -78,7 +80,7 @@ func spawn_players() -> void:
 				CEntitySpawner.Config.CALLBACK_NAME: "spawn_callback",
 				CEntitySpawner.Config.CALLBACK_PATH: get_path(),
 			})
-			n_planes+= 1
+			GameState.players[player].state = CGameState.PLAYER_STATE.SPECTATING
 
 func spawn_callback(node : Node, config : Dictionary) -> void:
 	#print_debug("Call back with id ", config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY], " on player ", multiplayer.get_unique_id(), " scene is ", config[CEntitySpawner.Config.PATH])

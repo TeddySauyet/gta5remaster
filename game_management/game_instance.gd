@@ -48,7 +48,16 @@ func reset() -> void:
 func open_game_map() -> void:
 	map = preload("res://src/map/Map.tscn").instantiate()
 	add_child(map)
+	if multiplayer.is_server():
+		map.round_won.connect(on_round_won)
 	
+func on_round_won(team : CGameState.PLAYER_TEAM) -> void:
+	if multiplayer.is_server():
+		GameState.round_wins[team] += 1
+		if GameState.round_wins[team] >= GameState.N_ROUNDS_TO_WIN:
+			MPhaseController.set_phase(RMPhase.GameEnd)
+		else:
+			MPhaseController.set_phase(RMPhase.RoundEnd)
 
 @rpc("any_peer", "reliable", "call_local")
 func set_map_ready() -> void:
