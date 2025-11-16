@@ -4,12 +4,14 @@ class_name CMap
 @onready var motorcycle_start: Node3D = $MotorcycleStart
 @onready var plane_start: Node3D = $PlaneStart
 @onready var spectator_start: Node3D = $SpectatorStart
+@onready var delivery_area: Area3D = $Area3D_DeliveryArea
 
 signal round_won(team : CGameState.PLAYER_TEAM)
 
 func _ready() -> void:
 	EntitySpawner.spawn_parent = self
 	MPhaseController.new_local_phase.connect(on_phase_changed)
+	delivery_area.body_entered.connect(on_delivery_entered)
 
 func _process(delta: float) -> void:
 	if multiplayer.is_server():
@@ -85,3 +87,9 @@ func spawn_players() -> void:
 func spawn_callback(node : Node, config : Dictionary) -> void:
 	#print_debug("Call back with id ", config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY], " on player ", multiplayer.get_unique_id(), " scene is ", config[CEntitySpawner.Config.PATH])
 	pass
+
+func on_delivery_entered(body : Node3D) -> void:
+	if body is Motorcyle:
+		round_won.emit(GameState.team_motorcycle)
+	else:
+		assert(false, "should be nobody else in the motorcyle layer bro")

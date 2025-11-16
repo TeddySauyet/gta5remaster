@@ -56,6 +56,8 @@ class PlaneInputState:
 		
 var _current_inputs := PlaneInputState.create(0,0,0,0,0,0)
 
+static var velocity_death_threshold := 20.0
+
 func set_input_state() -> void:
 	_current_inputs = PlaneInputState.create(
 			Input.get_action_strength("throttle_up"),
@@ -100,7 +102,12 @@ func _physics_process(delta):
 	else:
 		grounded = false
 
-	move_and_slide()
+	if move_and_slide():
+		if is_authority():
+			for idx in range(0, get_slide_collision_count()):
+				var collision : KinematicCollision3D = get_slide_collision(idx)
+				if collision.get_remainder().length()/delta > velocity_death_threshold:
+					die()
 
 func get_input(delta  : float):
 	# Throttle input
@@ -127,6 +134,23 @@ func get_input(delta  : float):
 func is_authority() -> bool:
 	return get_multiplayer_authority() == multiplayer.get_unique_id()
 
-
 func receive_damage(dmg : DamageInstance) -> void:
 	print_debug("Argh! I've been shot by ", dmg.source_name, "!")
+
+func die() -> void:
+	if is_authority():
+		remote_die.rpc()
+		EntitySpawner.spawn_item(
+			{
+				CEntitySpawner.Config.PATH: "res://src/spectator/Spectator.tscn",
+				CEntitySpawner.Config.GLOBAL_TRANSFORM: global_transform,
+				CEntitySpawner.Config.MULTIPLAYER_AUTHORITY: get_multiplayer_authority(),
+				CEntitySpawner.Config.SET_CAMERA3D: true,
+			}
+		)
+
+@rpc("call_local", "authority", "reliable")
+func remote_die() -> void:
+	queue_free()
+	if multiplayer.is_server():
+		GameState.players[get_multiplayer_authority()].state = CGameState.PLAYER_STATE.SPECTATING
