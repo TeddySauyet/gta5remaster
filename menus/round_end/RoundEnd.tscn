@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxs7tnr3yqej0"]
+[gd_scene load_steps=3 format=3 uid="uid://dxs7tnr3yqej0"]
 
 [ext_resource type="PackedScene" uid="uid://djl328pev2pdu" path="res://menus/scoreboard/Scoreboard.tscn" id="1_5nq73"]
+[ext_resource type="Script" path="res://menus/round_end/round_end.gd" id="1_vdwq2"]
 
 [node name="RoundEnd" type="Control"]
 layout_mode = 3
@@ -9,8 +10,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_vdwq2")
 
-[node name="HBoxContainer" parent="." instance=ExtResource("1_5nq73")]
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -142.5
+offset_right = 258.0
+offset_bottom = 142.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.268398, 0.268398, 0.268398, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -18,8 +35,19 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -111.5
-offset_top = -17.5
+offset_top = -35.0
 offset_right = 111.5
-offset_bottom = 17.5
+offset_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HBoxContainer" parent="VBoxContainer" instance=ExtResource("1_5nq73")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonReadyUp" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Ready"

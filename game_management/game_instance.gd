@@ -3,6 +3,7 @@ class_name CGameInstance
 
 var lobby_menu : CLobbyMenu = null
 var map : CMap = null
+var round_end_menu : CRoundEndMenu = null
 
 
 func _ready() -> void:
@@ -24,25 +25,30 @@ func _on_new_phase(phase : RMPhase) -> void:
 		RMPhase.LOBBY:
 			open_lobby_menu()
 		RMPhase.MapLoad:
-			reset()
+			reset_menus()
 			open_game_map()
 			MPhaseController.set_ready(true)
 		RMPhase.Playing:
 			print_debug("Playing on ", multiplayer.get_unique_id())
 		RMPhase.RoundEnd:
 			print_debug("Round end on  ", multiplayer.get_unique_id())
+			open_round_end_menu()
 			
 
 func open_lobby_menu() -> void:
-	reset()
+	reset_menus()
 	lobby_menu = preload("res://menus/lobby/LobbyMenu.tscn").instantiate()
 	add_child(lobby_menu)
 
-func reset() -> void:
+func reset_menus() -> void:
 	if lobby_menu:
 		remove_child(lobby_menu)
 		lobby_menu.queue_free()
 		lobby_menu = null
+	if round_end_menu:
+		remove_child(round_end_menu)
+		round_end_menu.queue_free()
+		round_end_menu = null
 
 
 func open_game_map() -> void:
@@ -59,7 +65,7 @@ func on_round_won(team : CGameState.PLAYER_TEAM) -> void:
 		else:
 			MPhaseController.set_phase(RMPhase.RoundEnd)
 
-@rpc("any_peer", "reliable", "call_local")
-func set_map_ready() -> void:
-	var id := multiplayer.get_remote_sender_id()
-	GameState.players[id].ready_for_map_start = true
+func open_round_end_menu() -> void:
+	reset_menus()
+	round_end_menu = preload("res://menus/round_end/RoundEnd.tscn").instantiate()
+	add_child(round_end_menu)
