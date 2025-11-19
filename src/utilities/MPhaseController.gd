@@ -6,7 +6,8 @@ class_name CMPhaseController
 ##  set_phase(variant[String, RMPhase]) -> bool
 ##  set_ready(bool) -> void
 ##  get_current_phase() -> RMPhase
-##  get_ready() -> vbool
+##  get_ready() -> bool
+##  get_consensus() -> bool
 
 
 @export var phases : Array[RMPhase] : set = set_phases

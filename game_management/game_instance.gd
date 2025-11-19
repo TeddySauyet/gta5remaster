@@ -14,6 +14,12 @@ func _ready() -> void:
 		MPhaseController.set_phase("Lobby")
 		_on_new_phase(MPhaseController.get_current_phase())
 
+func _process(delta: float) -> void:
+	if multiplayer.is_server():
+		match MPhaseController.get_current_phase():
+			RMPhase.RoundEnd:
+				if MPhaseController.get_consensus():
+					end_round_end_phase()
 
 ## lots more work to do here
 func on_player_connected(id : int) -> void:
@@ -69,3 +75,17 @@ func open_round_end_menu() -> void:
 	reset_menus()
 	round_end_menu = preload("res://menus/round_end/RoundEnd.tscn").instantiate()
 	add_child(round_end_menu)
+
+func end_round_end_phase() -> void:
+	if multiplayer.is_server():
+		remote_end_round_end_phase.rpc()
+		if GameState.round_wins[CGameState.PLAYER_TEAM.A] >= GameState.N_ROUNDS_TO_WIN \
+			or GameState.round_wins[CGameState.PLAYER_TEAM.A] >= GameState.N_ROUNDS_TO_WIN:
+				MPhaseController.set_phase(RMPhase.LOBBY)
+		else:
+				MPhaseController.set_phase(RMPhase.Playing)
+			
+		
+@rpc("call_local", "authority", "reliable")
+func remote_end_round_end_phase() -> void:
+	reset_menus()

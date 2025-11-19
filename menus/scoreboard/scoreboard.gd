@@ -21,3 +21,8 @@ func update_labels() -> void:
 		label_team_b.text += "Motorcycles"
 	else:
 		print_debug("Uh oh!")
+	label_team_a.text += "| Wins: "
+	label_team_b.text += "| Wins: "
+	label_team_a.text += str(GameState.round_wins[CGameState.PLAYER_TEAM.A])
+	label_team_b.text += str(GameState.round_wins[CGameState.PLAYER_TEAM.B])
+	
