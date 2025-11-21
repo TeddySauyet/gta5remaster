@@ -7,6 +7,7 @@ extends HBoxContainer
 func _ready() -> void:
 	GameState.team_motorcycle_changed.connect(update_labels)
 	GameState.team_plane_changed.connect(update_labels)
+	GameState.round_wins_changed.connect(update_labels)
 	update_labels()
 
 
@@ -25,4 +26,3 @@ func update_labels() -> void:
 	label_team_b.text += "| Wins: "
 	label_team_a.text += str(GameState.round_wins[CGameState.PLAYER_TEAM.A])
 	label_team_b.text += str(GameState.round_wins[CGameState.PLAYER_TEAM.B])
-	

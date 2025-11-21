@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if multiplayer.is_server():
-		match MPhaseController.get_current_phase():
+		match MPhaseController.get_current_phase().name:
 			RMPhase.RoundEnd:
 				if MPhaseController.get_consensus():
 					end_round_end_phase()
