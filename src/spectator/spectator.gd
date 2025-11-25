@@ -1,4 +1,5 @@
 extends Node3D
+class_name Spectator
 
 var speed := 1.0
 var min_speed := 1.0

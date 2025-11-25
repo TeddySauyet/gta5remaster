@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/spectator/spectator.gd" id="1_3v8xo"]
 
-[node name="Spectator" type="Node3D"]
+[node name="Spectator" type="Node3D" groups=["Players"]]
 script = ExtResource("1_3v8xo")
 
 [node name="Camera3D" type="Camera3D" parent="."]

@@ -16,7 +16,7 @@ properties/2/path = NodePath(".:transform")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Motorcycle2" type="CharacterBody3D"]
+[node name="Motorcycle2" type="CharacterBody3D" groups=["Players"]]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_x3ca5")

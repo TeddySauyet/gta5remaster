@@ -21,6 +21,10 @@ EntitySpawner="*res://unorganized/EntitySpawner.tscn"
 GameState="*res://game_management/GameState.tscn"
 MPhaseController="*res://src/utilities/MPhaseController.tscn"
 
+[global_group]
+
+Players="All connected player controlled scenes"
+
 [input]
 
 throttle_up={

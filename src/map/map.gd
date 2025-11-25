@@ -40,9 +40,18 @@ func _process(delta: float) -> void:
 
 func on_phase_changed(phase : RMPhase) -> void:
 	match phase.name:
-		"Playing":
+		RMPhase.Playing:
 			if multiplayer.is_server():
+				clear_players()
 				spawn_players()
+
+func clear_players() -> void:
+	remote_clear_players.rpc()
+	
+@rpc("authority", "reliable", "call_local")
+func remote_clear_players() -> void:
+	for scene in get_tree().get_nodes_in_group("Players"):
+		scene.queue_free()
 
 
 func spawn_players() -> void:
@@ -85,8 +94,16 @@ func spawn_players() -> void:
 			GameState.players[player].state = CGameState.PLAYER_STATE.SPECTATING
 
 func spawn_callback(node : Node, config : Dictionary) -> void:
-	#print_debug("Call back with id ", config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY], " on player ", multiplayer.get_unique_id(), " scene is ", config[CEntitySpawner.Config.PATH])
-	pass
+	if multiplayer.is_server():
+		var state := CGameState.PLAYER_STATE.NONE
+		match node:
+			PlayerPlane:
+				state = CGameState.PLAYER_STATE.PLANE
+			Motorcyle:
+				state = CGameState.PLAYER_STATE.MOTORCYCLE
+			Spectator:
+				state = CGameState.PLAYER_STATE.SPECTATING
+		GameState.players[config[CEntitySpawner.Config.MULTIPLAYER_AUTHORITY]].state = state
 
 func on_delivery_entered(body : Node3D) -> void:
 	if body is Motorcyle:
