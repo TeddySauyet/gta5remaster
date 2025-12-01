@@ -4,6 +4,7 @@ class_name CGameInstance
 var lobby_menu : CLobbyMenu = null
 var map : CMap = null
 var round_end_menu : CRoundEndMenu = null
+var game_end_menu : CMenuGameEnd = null
 
 
 func _ready() -> void:
@@ -39,6 +40,9 @@ func _on_new_phase(phase : RMPhase) -> void:
 		RMPhase.RoundEnd:
 			print_debug("Round end on  ", multiplayer.get_unique_id())
 			open_round_end_menu()
+		RMPhase.GameEnd:
+			print_debug("Game end on  ", multiplayer.get_unique_id())
+			open_game_end_menu()
 			
 
 func open_lobby_menu() -> void:
@@ -55,6 +59,10 @@ func reset_menus() -> void:
 		remove_child(round_end_menu)
 		round_end_menu.queue_free()
 		round_end_menu = null
+	if game_end_menu:
+		remove_child(game_end_menu)
+		game_end_menu.queue_free()
+		game_end_menu = null
 
 
 func open_game_map() -> void:
@@ -75,6 +83,11 @@ func open_round_end_menu() -> void:
 	reset_menus()
 	round_end_menu = preload("res://menus/round_end/RoundEnd.tscn").instantiate()
 	add_child(round_end_menu)
+
+func open_game_end_menu() -> void:
+	reset_menus()
+	game_end_menu = preload("res://menus/game_end/GameEnd.tscn").instantiate()
+	add_child(game_end_menu)
 
 func end_round_end_phase() -> void:
 	if multiplayer.is_server():
