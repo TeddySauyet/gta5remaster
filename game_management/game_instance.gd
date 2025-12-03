@@ -30,6 +30,7 @@ func on_player_connected(id : int) -> void:
 func _on_new_phase(phase : RMPhase) -> void:
 	match phase.name:
 		RMPhase.LOBBY:
+			close_map()
 			open_lobby_menu()
 		RMPhase.MapLoad:
 			reset_menus()
@@ -71,6 +72,12 @@ func open_game_map() -> void:
 	if multiplayer.is_server():
 		map.round_won.connect(on_round_won)
 	
+func close_map() -> void:
+	if map:
+		remove_child(map)
+		map.queue_free()
+		map = null
+		
 func on_round_won(team : CGameState.PLAYER_TEAM) -> void:
 	if multiplayer.is_server():
 		GameState.round_wins[team] += 1
