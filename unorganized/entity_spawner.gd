@@ -3,6 +3,8 @@ class_name CEntitySpawner
 
 var spawn_parent : Node3D : set = set_spawn_parent
 
+var _name_idx := 0
+
 enum Config
 {
 	PATH,
@@ -12,6 +14,7 @@ enum Config
 	SET_CAMERA3D,
 	CALLBACK_NAME,
 	CALLBACK_PATH,
+	NAME,
 }
 
 static var config_types : Dictionary = {
@@ -22,6 +25,7 @@ static var config_types : Dictionary = {
 	Config.SET_CAMERA3D: bool(false),
 	Config.CALLBACK_NAME: String(""),
 	Config.CALLBACK_PATH: NodePath(),
+	Config.NAME: String(""),
 } 
 
 static func dummy_callback(_node: Node, _config : Dictionary) -> void:
@@ -39,6 +43,9 @@ func spawn_item(config : Dictionary) -> void:
 @rpc("call_local", "any_peer", "reliable")
 func _server_spawn_item(config : Dictionary) -> void:
 	#var id := multiplayer.get_remote_sender_id()
+	if not Config.NAME in config:
+		config[Config.NAME] = str(_name_idx)
+		_name_idx += 1
 	_client_spawn_item.rpc(config)
 	
 @rpc("call_local", "authority", "reliable")
@@ -53,7 +60,7 @@ func _client_spawn_item(config : Dictionary) -> void:
 		item.set_spawner_id(config[Config.SPAWNER_ID])
 	if Config.GLOBAL_TRANSFORM in config:
 		item.global_transform = config[Config.GLOBAL_TRANSFORM]
-	spawn_parent.add_child(item)
+	spawn_parent.add_child(item, true)
 	if Config.MULTIPLAYER_AUTHORITY in config:
 		item.set_multiplayer_authority(config[Config.MULTIPLAYER_AUTHORITY])
 	if Config.SET_CAMERA3D in config:
