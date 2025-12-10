@@ -31,6 +31,7 @@ func _on_new_phase(phase : RMPhase) -> void:
 	match phase.name:
 		RMPhase.LOBBY:
 			close_map()
+			reset_player_states()
 			open_lobby_menu()
 		RMPhase.MapLoad:
 			reset_menus()
@@ -65,6 +66,9 @@ func reset_menus() -> void:
 		game_end_menu.queue_free()
 		game_end_menu = null
 
+func reset_player_states() -> void:
+	for player in GameState.players:
+		GameState.players[player] = CGameState.CPlayerInfo.new()
 
 func open_game_map() -> void:
 	map = preload("res://src/map/Map.tscn").instantiate()

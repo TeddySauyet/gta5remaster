@@ -19,3 +19,4 @@ func debug_start() -> void:
 func start_game() -> void:
 	game_instance = preload("res://game_management/GameInstance.tscn").instantiate()
 	add_child(game_instance, true)
+	$TreeDisplayer.root_item = game_instance
