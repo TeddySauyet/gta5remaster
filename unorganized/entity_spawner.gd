@@ -60,6 +60,8 @@ func _client_spawn_item(config : Dictionary) -> void:
 		item.set_spawner_id(config[Config.SPAWNER_ID])
 	if Config.GLOBAL_TRANSFORM in config:
 		item.global_transform = config[Config.GLOBAL_TRANSFORM]
+	if Config.NAME in config:
+		item.name = config[Config.NAME]
 	spawn_parent.add_child(item, true)
 	if Config.MULTIPLAYER_AUTHORITY in config:
 		item.set_multiplayer_authority(config[Config.MULTIPLAYER_AUTHORITY])
