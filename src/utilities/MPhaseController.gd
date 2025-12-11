@@ -217,7 +217,6 @@ func set_ready(value : bool) -> void:
 func server_set_client_ready(value : bool) -> void:
 	var id := multiplayer.get_remote_sender_id()
 	if value != player_to_ready[id]:
-		player_to_ready[id] = value
 		multicast_set_player_ready.rpc(id, value)
 		
 @rpc("authority", "reliable", "call_local")
