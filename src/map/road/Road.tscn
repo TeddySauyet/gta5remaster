@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn8vfwfyjil04"]
+
+[ext_resource type="Script" path="res://src/map/road/road.gd" id="1_h3wis"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8c680"]
+
+[node name="Road" type="Path3D"]
+script = ExtResource("1_h3wis")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_8c680")
