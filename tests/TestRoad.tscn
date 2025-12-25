@@ -3,12 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://cn8vfwfyjil04" path="res://src/map/road/Road.tscn" id="1_qhfq3"]
 
 [sub_resource type="Curve3D" id="Curve3D_rwr3r"]
-bake_interval = 10.0
+bake_interval = 1.0
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.00825703, -1.52588e-05, 0.00379705, 7, 2, 18, -7, -2, -18, 8, -3.48936, -25),
-"tilts": PackedFloat32Array(0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0.004, 12, 0, -8, -12, 0, 8, 0.0260239, -0.489363, -13.454, 7.85902, 0, -0.468419, -7.85902, 0, 0.468419, -16.3166, -0.489363, -13.0897, 0, 0, 0, 0, 0, 0, -30.6294, -0.489363, -3.98156),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
 }
-point_count = 2
+point_count = 4
 
 [node name="TestRoad" type="Node3D"]
 

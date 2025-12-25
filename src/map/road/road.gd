@@ -42,13 +42,13 @@ func make_mesh() -> void:
 	for i in range(_points.size() - 1):
 		add_next_tube()
 	
+	add_ending_face()
+	
 	# Assign arrays to surface array.
 	_surface_array[Mesh.ARRAY_VERTEX] = _verts
 	_surface_array[Mesh.ARRAY_TEX_UV] = _uvs
 	_surface_array[Mesh.ARRAY_NORMAL] = _normals
 	_surface_array[Mesh.ARRAY_INDEX] = _indices
-	
-	
 	
 	# Create mesh surface from mesh array.
 	# No blendshapes, lods, or compression used.
@@ -65,11 +65,12 @@ func add_beginning_face() -> void:
 	_verts.append(_points[0] - right * width + Vector3.UP * height)
 	_verts.append(_points[0] + right * width + Vector3.UP * height)
 	_verts.append(_points[0] + right * width - Vector3.UP * height)
+
+	_normals.append((-right.normalized() - Vector3.UP.normalized() -forward.normalized()).normalized())
+	_normals.append((-right.normalized() + Vector3.UP.normalized() -forward.normalized()).normalized())
+	_normals.append((+right.normalized() + Vector3.UP.normalized() -forward.normalized()).normalized())
+	_normals.append((+right.normalized() - Vector3.UP.normalized() -forward.normalized()).normalized())
 	
-	var center := _points[0] + forward / 2.0
-	
-	for i in range(-4,0):
-		_normals.append((_verts[i] - center).normalized())
 	
 	_uvs.append(Vector2(0,0))
 	_uvs.append(Vector2(0,1))
@@ -77,7 +78,7 @@ func add_beginning_face() -> void:
 	_uvs.append(Vector2(1,0))
 	
 	_indices.append_array([0,1,2])
-	_indices.append_array([1,2,3])
+	_indices.append_array([2,3,0])
 	
 func add_next_tube() -> void:
 	_points_index += 1
@@ -103,13 +104,40 @@ func add_next_tube() -> void:
 	var i := _verts_index
 	var j := _verts_index - 4
 	
-	#_indices.append_array([i, i-3, j-3])
-	#_indices.append_array([j-3, j, i])
+	_indices.append_array([i, i-3, j-3])
+	_indices.append_array([j-3, j, i])
 	
-	for face in range(4):
+	for face in range(3):
 		_indices.append_array([j-face-1, i-face-1, i-face])
 		_indices.append_array([i-face, j-face, j-face-1])
 
+func add_ending_face() -> void:
+	var forward := _points[_points_index] - _points[_points_index-1]
+	var right := forward.cross(Vector3.UP).normalized()
+	_verts_index += 4
+	
+	_verts.append(_points[_points_index] - right * width - Vector3.UP * height)
+	_verts.append(_points[_points_index] - right * width + Vector3.UP * height)
+	_verts.append(_points[_points_index] + right * width + Vector3.UP * height)
+	_verts.append(_points[_points_index] + right * width - Vector3.UP * height)
+	
+	_normals.append((-right.normalized() - Vector3.UP.normalized() + forward.normalized()).normalized())
+	_normals.append((-right.normalized() + Vector3.UP.normalized() + forward.normalized()).normalized())
+	_normals.append((+right.normalized() + Vector3.UP.normalized() + forward.normalized()).normalized())
+	_normals.append((+right.normalized() - Vector3.UP.normalized() + forward.normalized()).normalized())
+	
+	
+	_uvs.append(Vector2(0,0))
+	_uvs.append(Vector2(0,1))
+	_uvs.append(Vector2(1,1))
+	_uvs.append(Vector2(1,0))
+	
+	var zero := _verts_index - 3
+	
+	#_indices.append_array([0,1,2])
+	#_indices.append_array([1,2,3])
+	_indices.append_array([zero+2, zero+1,zero])
+	_indices.append_array([zero, zero+3,zero+2])
 
 func add_2m_cube() -> void:
 	mesh_instance.mesh.clear_surfaces()
