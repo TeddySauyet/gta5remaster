@@ -5,10 +5,10 @@
 [sub_resource type="Curve3D" id="Curve3D_rwr3r"]
 bake_interval = 1.0
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, -12, 0, 8, 0.026, 0, -10),
-"tilts": PackedFloat32Array(0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 10, 2.90088, -1.71661e-05, 11.5247, -2.90088, 1.71661e-05, -11.5247, 0.026, 0, -10, 10.7624, 0, 4.4229, -10.7624, 0, -4.4229, -11.2784, 1.71661e-05, -34.0563, 21.6722, 0, -15.6276, -21.6722, 0, 15.6276, -50.937, 1.71661e-05, -34.646, -2.21145, 0, -15.1853, 2.21145, 0, 15.1853, -75.4103, 1.71661e-05, 0.589722, -13.1213, 0, -7.66634, 13.1213, 0, 7.66634, -58.1611, 1.71661e-05, 49.2416, -14.5956, 0, 13.4161, 14.5956, 0, -13.4161, -14.0795, 1.71661e-05, 59.7091, 0, 0, 0, 0, 0, 0, 48.7256, 1.71661e-05, 52.0427),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 2
+point_count = 8
 
 [node name="TestRoad" type="Node3D"]
 
@@ -58,5 +58,4 @@ height = 28.8759
 [node name="Road" parent="." instance=ExtResource("1_qhfq3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.489363, 0)
 curve = SubResource("Curve3D_rwr3r")
-bake = true
-width = 1.0
+width = 5.0

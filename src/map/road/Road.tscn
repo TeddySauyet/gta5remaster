@@ -1,22 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cn8vfwfyjil04"]
+[gd_scene load_steps=4 format=3 uid="uid://cn8vfwfyjil04"]
 
 [ext_resource type="Script" path="res://src/map/road/road.gd" id="1_h3wis"]
-[ext_resource type="Texture2D" uid="uid://17cio8ivhxcp" path="res://src/map/road/mat_road_v0_albedo.png" id="2_jr5eg"]
-[ext_resource type="Texture2D" uid="uid://bdmfg2sw2cn2s" path="res://src/map/road/mat_road_v0_orm.png" id="3_bd1tx"]
-[ext_resource type="Texture2D" uid="uid://egamgp17myhu" path="res://src/map/road/mat_road_v0_heightmap.png" id="3_wvh31"]
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_8a8ia"]
-albedo_texture = ExtResource("2_jr5eg")
-orm_texture = ExtResource("3_bd1tx")
-normal_enabled = true
-normal_scale = 10.0
-normal_texture = ExtResource("3_bd1tx")
-heightmap_texture = ExtResource("3_wvh31")
-uv1_triplanar = true
-uv1_triplanar_sharpness = 0.00153239
-uv1_world_triplanar = true
-uv2_triplanar = true
-uv2_world_triplanar = true
+[ext_resource type="Material" uid="uid://c56pbq3ccuekj" path="res://src/map/road/mat_road_v0.tres" id="2_7vnsd"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8c680"]
 
@@ -24,5 +9,5 @@ uv2_world_triplanar = true
 script = ExtResource("1_h3wis")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("ORMMaterial3D_8a8ia")
+material_override = ExtResource("2_7vnsd")
 mesh = SubResource("ArrayMesh_8c680")

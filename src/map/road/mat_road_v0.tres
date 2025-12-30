@@ -1,21 +1,21 @@
-[gd_resource type="ORMMaterial3D" load_steps=6 format=3]
-[ext_resource path="mat_road_v0_albedo.png" type="Texture" id=1]
-[ext_resource path="mat_road_v0_orm.png" type="Texture" id=2]
-[ext_resource path="mat_road_v0_normal.png" type="Texture" id=3]
-[ext_resource path="mat_road_v0_heightmap.png" type="Texture" id=4]
+[gd_resource type="ORMMaterial3D" load_steps=5 format=3 uid="uid://c56pbq3ccuekj"]
+
+[ext_resource type="Texture2D" uid="uid://17cio8ivhxcp" path="res://src/map/road/mat_road_v0_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bdmfg2sw2cn2s" path="res://src/map/road/mat_road_v0_orm.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://dxaraybpqdw3v" path="res://src/map/road/mat_road_v0_normal.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://egamgp17myhu" path="res://src/map/road/mat_road_v0_heightmap.png" id="4"]
+
 [resource]
-albedo_color = Color(1.0, 1.0, 1.0, 1.0)
-albedo_texture = ExtResource( 1 )
-orm_texture = ExtResource( 2 )
+albedo_texture = ExtResource("1")
+orm_texture = ExtResource("2")
 normal_enabled = true
-normal_scale = 1.0
-normal_texture = ExtResource( 3 )
+normal_texture = ExtResource("3")
 heightmap_enabled = true
 heightmap_scale = 12.5
 heightmap_deep_parallax = true
 heightmap_min_layers = 8
 heightmap_max_layers = 32
-heightmap_texture = ExtResource( 4 )
-
-
-
+heightmap_texture = ExtResource("4")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+uv1_world_triplanar = true

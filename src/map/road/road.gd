@@ -84,17 +84,25 @@ func add_next_tube() -> void:
 	_points_index += 1
 	var forward := _points[_points_index] - _points[_points_index-1]
 	var right := forward.cross(Vector3.UP).normalized()
+	var up := forward.cross(-right).normalized()
 	_verts_index += 4
 	
-	_verts.append(_points[_points_index] - right * width - Vector3.UP * height)
-	_verts.append(_points[_points_index] - right * width + Vector3.UP * height)
-	_verts.append(_points[_points_index] + right * width + Vector3.UP * height)
-	_verts.append(_points[_points_index] + right * width - Vector3.UP * height)
+	_verts.append(_points[_points_index] - right * width - up * height)
+	_verts.append(_points[_points_index] - right * width + up * height)
+	_verts.append(_points[_points_index] + right * width + up * height)
+	_verts.append(_points[_points_index] + right * width - up * height)
 	
-	_normals.append((-right * width - Vector3.UP * height).normalized())
-	_normals.append((-right * width + Vector3.UP * height).normalized())
-	_normals.append((+right * width + Vector3.UP * height).normalized())
-	_normals.append((+right * width - Vector3.UP * height).normalized())
+	#causes smooth lighting
+	#_normals.append((-right * width - Vector3.UP * height).normalized())
+	#_normals.append((-right * width + Vector3.UP * height).normalized())
+	#_normals.append((+right * width + Vector3.UP * height).normalized())
+	#_normals.append((+right * width - Vector3.UP * height).normalized())
+	
+	#makes the edges all nasty like
+	_normals.append(-up)
+	_normals.append(up)
+	_normals.append(up)
+	_normals.append(-up)
 	
 	_uvs.append(Vector2(0,0))
 	_uvs.append(Vector2(0,1))
@@ -133,9 +141,7 @@ func add_ending_face() -> void:
 	_uvs.append(Vector2(1,0))
 	
 	var zero := _verts_index - 3
-	
-	#_indices.append_array([0,1,2])
-	#_indices.append_array([1,2,3])
+
 	_indices.append_array([zero+2, zero+1,zero])
 	_indices.append_array([zero, zero+3,zero+2])
 
