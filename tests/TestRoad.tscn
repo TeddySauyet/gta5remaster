@@ -5,10 +5,10 @@
 [sub_resource type="Curve3D" id="Curve3D_rwr3r"]
 bake_interval = 1.0
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0.004, 12, 0, -8, -12, 0, 8, 0.0260239, -0.489363, -13.454, 7.85902, 0, -0.468419, -7.85902, 0, 0.468419, -16.3166, -0.489363, -13.0897, 0, 0, 0, 0, 0, 0, -30.6294, -0.489363, -3.98156),
-"tilts": PackedFloat32Array(0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, -12, 0, 8, 0.026, 0, -10),
+"tilts": PackedFloat32Array(0, 0)
 }
-point_count = 4
+point_count = 2
 
 [node name="TestRoad" type="Node3D"]
 
@@ -58,4 +58,5 @@ height = 28.8759
 [node name="Road" parent="." instance=ExtResource("1_qhfq3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.489363, 0)
 curve = SubResource("Curve3D_rwr3r")
+bake = true
 width = 1.0
