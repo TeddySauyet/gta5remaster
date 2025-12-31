@@ -3,7 +3,6 @@ extends Path3D
 class_name CRoad
 
 @export var bake : bool = false : set = _set_bake
-
 @export var width : float = 8.0
 @export var height : float = 0.1
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
@@ -14,20 +13,23 @@ var _verts_index := 0
 
 var _surface_array = []
 
-var _verts = PackedVector3Array()
-var _uvs = PackedVector2Array()
-var _normals = PackedVector3Array()
-var _indices = PackedInt32Array()
-
+var _verts := PackedVector3Array()
+var _uvs := PackedVector2Array()
+var _normals := PackedVector3Array()
+var _indices := PackedInt32Array()
+var _space_state : PhysicsDirectSpaceState3D = null 
 
 func _set_bake(value : bool) -> void:
-	bake = value
+	#bake = value
 	make_mesh()
 
+func _physics_process(delta: float) -> void:
+	_space_state = get_world_3d().direct_space_state
+	#print(_space_state)
 
 func make_mesh() -> void:
 	mesh_instance.mesh.clear_surfaces()
-	_points = curve.get_baked_points()
+	_calculate_points()
 	_surface_array = []
 	_surface_array.resize(Mesh.ARRAY_MAX)
 	_verts = PackedVector3Array()
@@ -145,35 +147,15 @@ func add_ending_face() -> void:
 	_indices.append_array([zero+2, zero+1,zero])
 	_indices.append_array([zero, zero+3,zero+2])
 
-func add_2m_cube() -> void:
-	mesh_instance.mesh.clear_surfaces()
-	var surface_array = []
-	surface_array.resize(Mesh.ARRAY_MAX)
-
-	# PackedVector**Arrays for mesh construction.
-	var verts = PackedVector3Array()
-	var uvs = PackedVector2Array()
-	var normals = PackedVector3Array()
-	var indices = PackedInt32Array()
-
-	for x in [-1, 1]:
-		for y in [-1, 1]:
-			for z in [-1, 1]:
-				verts.append(Vector3(x, y, z))
-				normals.append(Vector3(x, y, z))
-				uvs.append(Vector2(x/2 + 0.5, y/2 + 0.5))
-	
-	indices.append_array([2,1,0])
-	indices.append_array([3,1,2])
-	
-
-	# Assign arrays to surface array.
-	surface_array[Mesh.ARRAY_VERTEX] = verts
-	surface_array[Mesh.ARRAY_TEX_UV] = uvs
-	surface_array[Mesh.ARRAY_NORMAL] = normals
-	surface_array[Mesh.ARRAY_INDEX] = indices
-
-	# Create mesh surface from mesh array.
-	# No blendshapes, lods, or compression used.
-	mesh_instance.mesh = ArrayMesh.new()
-	mesh_instance.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+func _calculate_points() -> void:
+	_points = curve.get_baked_points()
+	var mods := {}
+	var idx := -1
+	for point in _points:
+		idx += 1
+		var query := PhysicsRayQueryParameters3D.create(point, point+Vector3.DOWN*1000.0)
+		var result := _space_state.intersect_ray(query)
+		if result:
+			mods[idx] = result["position"]
+	for key in mods:
+		_points[key] = mods[key]

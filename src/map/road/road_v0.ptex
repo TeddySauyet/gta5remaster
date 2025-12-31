@@ -136,8 +136,9 @@
 	},
 	"nodes": [
 		{
+			"export_last_target": "Godot/Godot 4 ORM",
 			"export_paths": {
-
+				"Godot/Godot 4 ORM": "C:/Users/Teddy/Documents/Godot/Projects4.3/gta5remaster/src/map/road/mat_road_v0"
 			},
 			"name": "Material",
 			"node_position": {
