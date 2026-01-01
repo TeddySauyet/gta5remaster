@@ -20,12 +20,10 @@ var _indices := PackedInt32Array()
 var _space_state : PhysicsDirectSpaceState3D = null 
 
 func _set_bake(value : bool) -> void:
-	#bake = value
 	make_mesh()
 
 func _physics_process(delta: float) -> void:
 	_space_state = get_world_3d().direct_space_state
-	#print(_space_state)
 
 func make_mesh() -> void:
 	mesh_instance.mesh.clear_surfaces()
@@ -153,9 +151,9 @@ func _calculate_points() -> void:
 	var idx := -1
 	for point in _points:
 		idx += 1
-		var query := PhysicsRayQueryParameters3D.create(point, point+Vector3.DOWN*1000.0)
+		var query := PhysicsRayQueryParameters3D.create(global_transform*point, point+Vector3.DOWN*1000.0)
 		var result := _space_state.intersect_ray(query)
 		if result:
-			mods[idx] = result["position"]
+			mods[idx] = result["position"] * global_transform
 	for key in mods:
 		_points[key] = mods[key]
