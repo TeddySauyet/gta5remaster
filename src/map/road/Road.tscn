@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cn8vfwfyjil04"]
+[gd_scene load_steps=5 format=3 uid="uid://cn8vfwfyjil04"]
 
 [ext_resource type="Script" path="res://src/map/road/road.gd" id="1_h3wis"]
 [ext_resource type="Material" uid="uid://c56pbq3ccuekj" path="res://src/map/road/mat_road_v0.tres" id="2_7vnsd"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8c680"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jk5t7"]
 
 [node name="Road" type="Path3D"]
 script = ExtResource("1_h3wis")
@@ -11,3 +13,8 @@ script = ExtResource("1_h3wis")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = ExtResource("2_7vnsd")
 mesh = SubResource("ArrayMesh_8c680")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_jk5t7")

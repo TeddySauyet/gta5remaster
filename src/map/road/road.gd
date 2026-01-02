@@ -6,8 +6,11 @@ class_name CRoad
 @export var width : float = 8.0
 @export var height : float = 0.1
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
+@onready var static_body_3d: StaticBody3D = $StaticBody3D
+@onready var collision_shape_3d: CollisionShape3D = $StaticBody3D/CollisionShape3D
 
 var _points : PackedVector3Array
+var _collision_points : PackedVector3Array
 var _points_index := 0
 var _verts_index := 0
 
@@ -26,8 +29,14 @@ func _physics_process(delta: float) -> void:
 	_space_state = get_world_3d().direct_space_state
 
 func make_mesh() -> void:
+	for child in mesh_instance.get_children():
+		if child is StaticBody3D:
+			child.collision_mask = 0
+			child.collision_layer = 0
+			child.queue_free()
 	mesh_instance.mesh.clear_surfaces()
 	_calculate_points()
+	_collision_points = []
 	_surface_array = []
 	_surface_array.resize(Mesh.ARRAY_MAX)
 	_verts = PackedVector3Array()
@@ -54,6 +63,9 @@ func make_mesh() -> void:
 	# No blendshapes, lods, or compression used.
 	mesh_instance.mesh = ArrayMesh.new()
 	mesh_instance.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, _surface_array)
+	
+	calculate_collision_points()
+	generate_collision_mesh()
 
 func add_beginning_face() -> void:
 	_points_index = 0
@@ -157,3 +169,13 @@ func _calculate_points() -> void:
 			mods[idx] = result["position"] * global_transform
 	for key in mods:
 		_points[key] = mods[key]
+
+func calculate_collision_points() -> void:
+	_collision_points.resize(_indices.size())
+	var idx := 0
+	for index in _indices:
+		_collision_points[idx] = _verts[index]
+
+func generate_collision_mesh() -> void:
+	collision_shape_3d.shape.set_faces(_collision_points)
+	pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh8r73xag36sv"]
+[gd_scene load_steps=3 format=3 uid="uid://dh8r73xag36sv"]
 
 [ext_resource type="PackedScene" uid="uid://cn8vfwfyjil04" path="res://src/map/road/Road.tscn" id="1_qhfq3"]
 
@@ -10,11 +10,10 @@ _data = {
 }
 point_count = 8
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_lwyi0"]
-
 [node name="TestRoad" type="Node3D"]
 
 [node name="DebugGeometry" type="CSGCombiner3D" parent="."]
+visible = false
 use_collision = true
 collision_mask = 0
 
@@ -60,8 +59,3 @@ height = 28.8759
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
 curve = SubResource("Curve3D_rwr3r")
 width = 5.0
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_lwyi0")
