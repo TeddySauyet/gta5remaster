@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cty3i70tdj15y"]
+[gd_scene load_steps=13 format=3 uid="uid://cty3i70tdj15y"]
 
 [ext_resource type="Script" path="res://src/map/map.gd" id="1_xjq0r"]
+[ext_resource type="PackedScene" uid="uid://cn8vfwfyjil04" path="res://src/map/road/Road.tscn" id="2_l6t7k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d4ehn"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -48,6 +49,13 @@ albedo_color = Color(0, 0.760784, 0.0901961, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_2b6d7"]
 material = SubResource("StandardMaterial3D_0w5e4")
 size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="Curve3D" id="Curve3D_e6w4q"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.0118637, 0, 0.734825, 16.0256, 0, -0.481972, -16.0256, 0, 0.481972, -39.4131, 0, -15.7727, -1.32542, 0, -41.9316, 1.32542, 0, 41.9316, -84.3571, 0, 29.1712, -27.3519, 0, -9.51895, 27.3519, 0, 9.51895, -46.8837, 0, 73.6332, 16.1461, 0, 16.7485, -16.1461, 0, -16.7485, 3.24146, 0, 46.7632, 0, 0, 0, 0, 0, 0, -0.0118637, 0, 0.734825),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
 
 [node name="Map" type="Node3D"]
 script = ExtResource("1_xjq0r")
@@ -123,3 +131,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 amount = 32
 process_material = SubResource("ParticleProcessMaterial_8cj6i")
 draw_pass_1 = SubResource("BoxMesh_2b6d7")
+
+[node name="Road" parent="." instance=ExtResource("2_l6t7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.6299, 6, -34.7741)
+curve = SubResource("Curve3D_e6w4q")

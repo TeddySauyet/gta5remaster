@@ -175,7 +175,7 @@ func calculate_collision_points() -> void:
 	var idx := 0
 	for index in _indices:
 		_collision_points[idx] = _verts[index]
+		idx += 1
 
 func generate_collision_mesh() -> void:
 	collision_shape_3d.shape.set_faces(_collision_points)
-	pass

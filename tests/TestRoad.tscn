@@ -56,6 +56,5 @@ radius = 1.55839
 height = 28.8759
 
 [node name="Road" parent="." instance=ExtResource("1_qhfq3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
 curve = SubResource("Curve3D_rwr3r")
 width = 5.0
