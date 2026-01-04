@@ -5,9 +5,13 @@ class_name CRoad
 @export var bake : bool = false : set = _set_bake
 @export var width : float = 8.0
 @export var height : float = 0.1
-@onready var mesh_instance: MeshInstance3D = $MeshInstance3D
+@export_category("Internals")
+@export var _mesh : ArrayMesh
+@export var __collision_shape : ConcavePolygonShape3D
+
+@onready var mesh_instance: MeshInstance3D = $MeshInstance3D : get = _get_mesh_instance
 @onready var static_body_3d: StaticBody3D = $StaticBody3D
-@onready var collision_shape_3d: CollisionShape3D = $StaticBody3D/CollisionShape3D
+@onready var collision_shape_3d: CollisionShape3D = $StaticBody3D/CollisionShape3D : get = _get_collision_shape_3d
 
 var _points : PackedVector3Array
 var _collision_points : PackedVector3Array
@@ -22,8 +26,26 @@ var _normals := PackedVector3Array()
 var _indices := PackedInt32Array()
 var _space_state : PhysicsDirectSpaceState3D = null 
 
+func _get_mesh_instance() -> MeshInstance3D:
+	if mesh_instance:
+		return mesh_instance
+	mesh_instance = $MeshInstance3D
+	return mesh_instance 
+
+func _get_collision_shape_3d() -> CollisionShape3D:
+	if not collision_shape_3d:
+		collision_shape_3d = $StaticBody3D/CollisionShape3D
+	if not collision_shape_3d.shape:
+		collision_shape_3d.shape = ConcavePolygonShape3D.new()
+	return collision_shape_3d
+
+func _ready() -> void:
+	collision_shape_3d.shape = __collision_shape
+	mesh_instance.mesh = _mesh
+
 func _set_bake(value : bool) -> void:
 	make_mesh()
+	save_resources()
 
 func _physics_process(delta: float) -> void:
 	_space_state = get_world_3d().direct_space_state
@@ -179,3 +201,7 @@ func calculate_collision_points() -> void:
 
 func generate_collision_mesh() -> void:
 	collision_shape_3d.shape.set_faces(_collision_points)
+
+func save_resources() -> void:
+	_mesh =  mesh_instance.mesh
+	__collision_shape = collision_shape_3d.shape
