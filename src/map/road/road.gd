@@ -186,6 +186,7 @@ func _calculate_points() -> void:
 	for point in _points:
 		idx += 1
 		var query := PhysicsRayQueryParameters3D.create(global_transform*point, point+Vector3.DOWN*1000.0)
+		query.exclude=[self, static_body_3d]
 		var result := _space_state.intersect_ray(query)
 		if result:
 			mods[idx] = result["position"] * global_transform
