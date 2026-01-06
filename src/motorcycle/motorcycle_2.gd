@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name Motorcyle
 
+@onready var road_ray_cast: RayCast3D = $RoadRayCast
+
 var max_speed := 60.0
 var acceleration := 10.0
 var max_angle := 60.0/180.0*PI
@@ -20,6 +22,8 @@ var time_since_on_floor = 0.0
 var steering_input := 0.0
 var throttle_input := 0.0
 
+var _is_on_road : bool = false
+
 func set_inputs() -> void:
 	steering_input = Input.get_axis("roll_right", "roll_left")
 	throttle_input = Input.get_axis("throttle_down", "throttle_up")
@@ -30,6 +34,8 @@ func is_authority() -> bool:
 func _physics_process(delta: float) -> void:
 	if is_authority():
 		set_inputs()
+	_is_on_road = road_ray_cast.get_collider() != null
+	#print_debug(_is_on_road)
 	var steering_delta = steering_input * delta*steering_speed
 	if signf(steering_delta) != signf(steering):
 		steering_delta *= 2
