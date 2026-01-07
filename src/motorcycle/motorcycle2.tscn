@@ -1,9 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://do7w6ao78pxsk"]
+[gd_scene load_steps=5 format=3 uid="uid://do7w6ao78pxsk"]
 
 [ext_resource type="Script" path="res://src/motorcycle/motorcycle_2.gd" id="1_x3ca5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_run51"]
-size = Vector3(0.77, 1.31295, 2.295)
+size = Vector3(0.77, 0.778, 2.295)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ssv7r"]
 properties/0/path = NodePath(".:steering_input")
@@ -15,6 +15,10 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:transform")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pgdcq"]
+height = 0.185
+radius = 0.45
 
 [node name="Motorcycle2" type="CharacterBody3D" groups=["Players"]]
 collision_layer = 4
@@ -38,8 +42,8 @@ radius = 0.45631
 height = 0.2
 sides = 16
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.366475, 0)
+[node name="CollisionShape3D_box" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0583817, 0)
 shape = SubResource("BoxShape3D_run51")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -51,3 +55,11 @@ replication_config = SubResource("SceneReplicationConfig_ssv7r")
 [node name="RoadRayCast" type="RayCast3D" parent="."]
 target_position = Vector3(0, -1.33, 0)
 collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.595902, 1.15843)
+shape = SubResource("CylinderShape3D_pgdcq")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.595902, -1.22518)
+shape = SubResource("CylinderShape3D_pgdcq")
