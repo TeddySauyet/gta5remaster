@@ -56,6 +56,8 @@ func make_mesh() -> void:
 			child.collision_mask = 0
 			child.collision_layer = 0
 			child.queue_free()
+	if not mesh_instance.mesh:
+		mesh_instance.mesh = ArrayMesh.new()
 	mesh_instance.mesh.clear_surfaces()
 	_calculate_points()
 	_collision_points = []

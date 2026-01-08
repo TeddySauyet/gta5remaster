@@ -2,6 +2,8 @@ extends CharacterBody3D
 class_name Motorcyle
 
 @onready var road_ray_cast: RayCast3D = $RoadRayCast
+@onready var area_3d_step_up_clear: Area3D = $Area3DStepUpClear
+@onready var area_3d_step_up_step: Area3D = $Area3DStepUpStep
 
 var max_speed := 60.0
 var acceleration := 10.0
@@ -21,6 +23,8 @@ var time_since_on_floor = 0.0
 
 var steering_input := 0.0
 var throttle_input := 0.0
+
+var step_up_height := 0.15
 
 var _is_on_road : bool = false
 
@@ -83,7 +87,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		time_since_on_floor = 0
 		
-	move_and_slide()
+	if move_and_slide():
+		var hit_step := area_3d_step_up_step.get_overlapping_bodies().size() > 0
+		var can_step_up := area_3d_step_up_clear.get_overlapping_bodies().size() == 0
+		if can_step_up and hit_step:
+			var delta_move := (Vector3.UP - transform.basis.z*delta*speed) * step_up_height
+			transform = transform.translated_local(delta_move)
+			
 	#print_debug(velocity.length(), '|', gear_disadvantage)
 
 func receive_damage(dmg : DamageInstance) -> void:
