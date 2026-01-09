@@ -97,10 +97,12 @@ func add_beginning_face() -> void:
 	var right := forward.cross(Vector3.UP).normalized()
 	_verts_index = 3
 	
-	_verts.append(_points[0] - right * width - Vector3.UP * height)
+	var ramp := right * height * 2
+	
+	_verts.append(_points[0] - right * width - Vector3.UP * height - ramp)
 	_verts.append(_points[0] - right * width + Vector3.UP * height)
 	_verts.append(_points[0] + right * width + Vector3.UP * height)
-	_verts.append(_points[0] + right * width - Vector3.UP * height)
+	_verts.append(_points[0] + right * width - Vector3.UP * height + ramp)
 
 	_normals.append((-right.normalized() - Vector3.UP.normalized() -forward.normalized()).normalized())
 	_normals.append((-right.normalized() + Vector3.UP.normalized() -forward.normalized()).normalized())
@@ -123,10 +125,13 @@ func add_next_tube() -> void:
 	var up := forward.cross(-right).normalized()
 	_verts_index += 4
 	
-	_verts.append(_points[_points_index] - right * width - up * height)
+	var ramp := right * height * 2
+	
+	
+	_verts.append(_points[_points_index] - right * width - up * height - ramp)
 	_verts.append(_points[_points_index] - right * width + up * height)
 	_verts.append(_points[_points_index] + right * width + up * height)
-	_verts.append(_points[_points_index] + right * width - up * height)
+	_verts.append(_points[_points_index] + right * width - up * height + ramp)
 	
 	#causes smooth lighting
 	#_normals.append((-right * width - Vector3.UP * height).normalized())
@@ -160,10 +165,12 @@ func add_ending_face() -> void:
 	var right := forward.cross(Vector3.UP).normalized()
 	_verts_index += 4
 	
-	_verts.append(_points[_points_index] - right * width - Vector3.UP * height)
+	var ramp := right * height * 2
+	
+	_verts.append(_points[_points_index] - right * width - Vector3.UP * height - ramp)
 	_verts.append(_points[_points_index] - right * width + Vector3.UP * height)
 	_verts.append(_points[_points_index] + right * width + Vector3.UP * height)
-	_verts.append(_points[_points_index] + right * width - Vector3.UP * height)
+	_verts.append(_points[_points_index] + right * width - Vector3.UP * height + ramp)
 	
 	_normals.append((-right.normalized() - Vector3.UP.normalized() + forward.normalized()).normalized())
 	_normals.append((-right.normalized() + Vector3.UP.normalized() + forward.normalized()).normalized())
